@@ -21,8 +21,5 @@ module.exports = {
         return args
       })
     })
-
-    // 开发模式
-   
   }
 }
