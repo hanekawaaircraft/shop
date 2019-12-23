@@ -21,6 +21,8 @@ import axios from 'axios'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
+import ViewUI from 'view-design';
+import 'view-design/dist/styles/iview.css';
 
 // 配置请求的跟路径
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
@@ -44,6 +46,8 @@ Vue.use(VueQuillEditor)
 
 //注册element为全局组件
 Vue.use(ElementUI);
+
+Vue.use(ViewUI);
 
 Vue.filter('dateFormat', function(originVal) {
   const dt = new Date(originVal)
