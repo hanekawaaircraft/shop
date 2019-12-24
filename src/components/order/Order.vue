@@ -1,11 +1,18 @@
 <template>
   <div>
     <!-- 面包屑导航区域 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>订单管理</el-breadcrumb-item>
-      <el-breadcrumb-item>订单列表</el-breadcrumb-item>
-    </el-breadcrumb>
+    <Breadcrumb separator-class="el-icon-arrow-right">
+        <BreadcrumbItem :to="{ path: '/home' }">
+          <Icon type="ios-home-outline"></Icon> 首页
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <Icon type="logo-buffer"></Icon> 订单管理
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <Icon type="ios-cafe"></Icon> 订单列表
+        </BreadcrumbItem>
+    </Breadcrumb>
+
 
     <!-- 卡片视图区域 -->
     <el-card>

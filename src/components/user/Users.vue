@@ -1,14 +1,20 @@
 <template>
   <div>
     <!-- 面包屑导航区域 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-    </el-breadcrumb>
+    <Breadcrumb separator-class="el-icon-arrow-right">
+        <BreadcrumbItem :to="{ path: '/home' }">
+          <Icon type="ios-home-outline"></Icon> 首页
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <Icon type="logo-buffer"></Icon> 用户管理
+        </BreadcrumbItem>
+        <BreadcrumbItem>
+          <Icon type="ios-cafe"></Icon> 用户列表
+        </BreadcrumbItem>
+    </Breadcrumb>
 
     <!-- 卡片视图区域 -->
-    <el-card>
+    <Card>
       <!-- 搜索与添加区域 -->
       <el-row :gutter="20">
         <el-col :span="8">
@@ -51,7 +57,7 @@
       <!-- 分页区域 -->
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pagenum" :page-sizes="[1, 2, 5, 10]" :page-size="queryInfo.pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
-    </el-card>
+    </Card>
 
     <!-- 添加用户的对话框 -->
     <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
