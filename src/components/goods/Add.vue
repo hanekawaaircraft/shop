@@ -13,19 +13,19 @@
       </BreadcrumbItem>
     </Breadcrumb>
     <!-- 卡片视图 -->
-    <el-card>
+    <Card>
       <!-- 提示区域 -->
       <el-alert title="添加商品信息" type="info" center show-icon :closable="false">
       </el-alert>
       <!-- 步骤条区域 -->
-      <el-steps :space="200" :active="activeIndex - 0" finish-status="success" align-center>
-        <el-step title="基本信息"></el-step>
-        <el-step title="商品参数"></el-step>
-        <el-step title="商品属性"></el-step>
-        <el-step title="商品图片"></el-step>
-        <el-step title="商品内容"></el-step>
-        <el-step title="完成"></el-step>
-      </el-steps>
+      <Steps :space="200" :current="activeIndex - 0" status="finish" align-center >
+        <Step title="基本信息" content=""></Step>
+        <Step title="商品参数" content=""></Step>
+        <Step title="商品属性" content=""></Step>
+        <Step title="商品图片" content=""></Step>
+        <Step title="商品内容" content=""></Step>
+        <Step title="完成" content=""></Step>
+      </Steps>
 
       <!-- tab栏区域 -->
 
@@ -78,7 +78,7 @@
         </el-tabs>
       </el-form>
 
-    </el-card>
+    </Card>
 
     <!-- 图片预览 -->
     <el-dialog title="图片预览" :visible.sync="previewVisible" width="50%">
@@ -297,6 +297,9 @@ export default {
 
 .previewImg {
   width: 100%;
+}
+.ivu-steps{
+  margin:10px 0
 }
 
 .btnAdd {
