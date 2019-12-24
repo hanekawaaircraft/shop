@@ -13,42 +13,37 @@
       </BreadcrumbItem>
     </Breadcrumb>
 
-    <!-- 卡片视图区域 -->
-    <el-card>
-      <el-row :gutter="20">
-        <el-col :span="8">
-          <el-input placeholder="请输入内容" v-model="queryInfo.query" clearable @clear="getGoodsList">
-            <el-button slot="append" icon="el-icon-search" @click="getGoodsList"></el-button>
-          </el-input>
-        </el-col>
-        <el-col :span="4">
-          <el-button type="primary" @click="goAddpage">添加商品</el-button>
-        </el-col>
-      </el-row>
+    <!-- 卡片视图区域 <Icon type="ios-search" />-->
+    <Card>
+      <Row :gutter="20">
+        <Col :span="8">
+          <Input placeholder="请输入内容" v-model="queryInfo.query"  @clear="getGoodsList">
+            <Icon type="ios-search" slot="append" @click="getGoodsList" />
+          </Input>
+        </Col>
+        <Col :span="4">
+          <Button type="primary" @click="goAddpage">添加商品</Button>
+        </Col>
+      </Row>
 
       <!-- table表格区域 -->
-      <el-table :data="goodslist" border stripe>
-        <el-table-column type="index"></el-table-column>
-        <el-table-column label="商品名称" prop="goods_name"></el-table-column>
-        <el-table-column label="商品价格(元)" prop="goods_price" width="95px"></el-table-column>
-        <el-table-column label="商品重量" prop="goods_weight" width="70px"></el-table-column>
-        <el-table-column label="创建时间" prop="add_time" width="140px">
-          <template slot-scope="scope">
+      <Table border :columns="columns12" :data="goodslist">
+        <template slot-scope="scope" slot="add_time">
             {{scope.row.add_time | dateFormat}}
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="130px">
-          <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" size="mini"></el-button>
-            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeById(scope.row.goods_id)"></el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
+        </template>
+        <template slot-scope="scope" slot="delGoods">
+          <Button @click="removeById(scope.row.goods_id)" type="primary">删除</Button>
+        </template>
+      </Table>
       <!-- 分页区域 -->
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pagenum" :page-sizes="[5, 10, 15, 20]" :page-size="queryInfo.pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total" background>
-      </el-pagination>
-    </el-card>
+      <Page 
+        :total="total" 
+        show-sizer 
+        @on-change="handleCurrentChange"
+        @on-page-size-change="handleSizeChange"
+        show-total
+      />
+    </Card>
   </div>
 </template>
 
@@ -64,6 +59,55 @@ export default {
       },
       // 商品列表
       goodslist: [],
+      //iview渲染列表
+      columns12: [
+        {
+          type:'index',
+          width: 60,
+          align: 'center'
+        },
+        {
+          title: '商品名称',
+          key: 'goods_name'
+        },
+        {
+          title: '商品重量',
+          key: 'goods_price',
+          width:95
+        },
+        {
+          title: '商品价格',
+          key: 'goods_weight',
+          width:70
+        },
+        {
+          title: '创建时间',
+          width:110,
+          slot: 'add_time',
+          key: 'add_time'
+        },
+        {
+          title: '操作',
+          width:130,
+          slot: 'delGoods',
+          align: 'center'
+          // render: (h, params) => {
+          //   return h('div', [
+          //     h('Button', {
+          //       props: {
+          //         type: 'primary',
+          //         size: 'small'
+          //       },
+          //       on: {
+          //         click: () => {
+          //           this.removeById(goodid)
+          //         }
+          //       }
+          //     }, '删除'),
+          //   ]);
+          // }
+        }
+      ],
       // 总数据条数
       total: 0
     }
@@ -77,7 +121,6 @@ export default {
       const { data: res } = await this.$http.get('goods', {
         params: this.queryInfo
       })
-
       if (res.meta.status !== 200) {
         return this.$message.error('获取商品列表失败！')
       }
@@ -86,6 +129,7 @@ export default {
       console.log(res.data)
       this.goodslist = res.data.goods
       this.total = res.data.total
+      this.goodid=res.data.goods_id
     },
     handleSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
@@ -127,4 +171,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.ivu-row{
+  margin: 0 0 10px 0
+}
+.ivu-page{
+  margin-top: 20px;
+}
 </style>
