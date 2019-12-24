@@ -234,6 +234,9 @@ export default {
 .treeTable {
   margin-top: 15px;
 }
+.ivu-layout-sider{
+  min-width:240px !important;
+}
 
 .el-cascader {
   width: 100%;

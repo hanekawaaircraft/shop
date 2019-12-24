@@ -14,7 +14,7 @@
     </Breadcrumb>
 
     <!-- 卡片视图 -->
-    <el-card>
+    <Card>
       <el-table :data="rightsList" border stripe>
         <el-table-column type="index"></el-table-column>
         <el-table-column label="权限名称" prop="authName"></el-table-column>
@@ -27,7 +27,7 @@
           </template>
         </el-table-column>
       </el-table>
-    </el-card>
+    </Card>
   </div>
 </template>
 

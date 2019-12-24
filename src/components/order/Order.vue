@@ -15,15 +15,7 @@
 
 
     <!-- 卡片视图区域 -->
-    <el-card>
-      <el-row>
-        <el-col :span="8">
-          <el-input placeholder="请输入内容">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input>
-        </el-col>
-      </el-row>
-
+    <Card>
       <!-- 订单列表数据 -->
       <el-table :data="orderlist" border stripe>
         <el-table-column type="index"></el-table-column>
@@ -58,7 +50,7 @@
       <!-- 分页区域 -->
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pagenum" :page-sizes="[5, 10, 15]" :page-size="queryInfo.pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
-    </el-card>
+    </Card>
 
     <!-- 修改地址的对话框 -->
     <el-dialog title="修改地址" :visible.sync="addressVisible" width="50%" @close="addressDialogClosed">

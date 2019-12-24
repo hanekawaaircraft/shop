@@ -1,14 +1,14 @@
 <template>
-  <el-container class="home-container">
-    <el-header>
+  <Layout class="home-container">
+    <Header>
       <div>
         <span>电商后台管理系统</span>
       </div>
-      <el-button type="info" @click="logout">退出</el-button>
-    </el-header>
+      <Button type="info" @click="logout">退出</Button>
+    </Header>
 
-    <el-container>    
-      <el-aside :width="'240px'">  
+    <Layout>    
+      <Sider :width="'240px'">  
         <Menu :theme="theme1" :active-name="activePath" accordion>
           <Submenu v-for="item in menulist" :key="item.id" :index="item.id + ''" :name="item.id">
             <template slot="title">             
@@ -22,14 +22,14 @@
             </MenuItem>
           </Submenu>
         </Menu>
-      </el-aside>
+      </Sider>
       <!-- 右侧内容主体 -->
-      <el-main>
+      <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
         <!-- 路由占位符 -->
         <router-view></router-view>
-      </el-main>
-    </el-container>
-  </el-container>
+      </Content>
+    </Layout>
+  </Layout>
 </template>
 
 <script>
@@ -91,7 +91,7 @@ export default {
             {
               id: 121,
               authName: "商品分类",
-              path: "categories",
+              path: "cate",
               children: [],
             },
           ]
@@ -121,7 +121,7 @@ export default {
               children: [],
             }
           ]
-        },
+        }
       ],
       iconsObj: {
         '125': 'iconfont icon-user',
@@ -150,7 +150,7 @@ export default {
 .home-container {
   height: 100%;
 }
-.el-header {
+.ivu-layout-header {
   background-color: #373d41;
   display: flex;
   justify-content: space-between;
@@ -167,14 +167,12 @@ export default {
   }
 }
 
-.el-aside {
+.ivu-layout-sider {
   background-color: #333744;
-  .el-menu {
-    border-right: none;
-  }
+  min-width:240px !important;
 }
 
-.el-main {
+.ivu-layout-content {
   background-color: #eaedf1;
 }
 
