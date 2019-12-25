@@ -14,26 +14,26 @@
     </Breadcrumb>
 
     <!-- 卡片视图区域 -->
-    <el-card>
+    <Card>
       <!-- 警告区域 -->
       <el-alert show-icon title="注意：只允许为第三级分类设置相关参数！" type="warning" :closable="false"></el-alert>
 
       <!-- 选择商品分类区域 -->
-      <el-row class="cat_opt">
-        <el-col>
+      <Row class="cat_opt">
+        <Col>
           <span>选择商品分类：</span>
           <!-- 选择商品分类的级联选择框 -->
           <el-cascader expand-trigger="hover" :options="catelist" :props="cateProps" v-model="selectedCateKeys" @change="handleChange">
           </el-cascader>
-        </el-col>
-      </el-row>
+        </Col>
+      </Row>
 
       <!-- tab 页签区域 -->
       <el-tabs v-model="activeName" @tab-click="handleTabClick">
         <!-- 添加动态参数的面板 -->
         <el-tab-pane label="动态参数" name="many">
           <!-- 添加参数的按钮 -->
-          <el-button type="primary" size="mini" :disabled="isBtnDisabled" @click="addDialogVisible=true">添加参数</el-button>
+          <Button type="primary" size="small" :disabled="isBtnDisabled" @click="addDialogVisible=true">添加参数</Button>
           <!-- 动态参数表格 -->
           <el-table :data="manyTableData" border stripe>
             <!-- 展开行 -->
@@ -42,10 +42,10 @@
                 <!-- 循环渲染Tag标签 -->
                 <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</el-tag>
                 <!-- 输入的文本框 -->
-                <el-input class="input-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
-                </el-input>
+                <Input class="input-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
+                </Input>
                 <!-- 添加按钮 -->
-                <el-button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</el-button>
+                <Button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</Button>
               </template>
             </el-table-column>
             <!-- 索引列 -->
@@ -53,8 +53,9 @@
             <el-table-column label="参数名称" prop="attr_name"></el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button size="mini" type="primary" icon="el-icon-edit" @click="showEditDialog(scope.row.attr_id)">编辑</el-button>
-                <el-button size="mini" type="danger" icon="el-icon-delete" @click="removeParams(scope.row.attr_id)">删除</el-button>
+                <Button size="small" type="primary" @click="showEditDialog(scope.row.attr_id)">编辑</Button>
+                &nbsp;
+                <Button size="small" @click="removeParams(scope.row.attr_id)">删除</Button>
               </template>
             </el-table-column>
           </el-table>
@@ -62,7 +63,7 @@
         <!-- 添加静态属性的面板 -->
         <el-tab-pane label="静态属性" name="only">
           <!-- 添加属性的按钮 -->
-          <el-button type="primary" size="mini" :disabled="isBtnDisabled" @click="addDialogVisible=true">添加属性</el-button>
+          <Button type="primary" size="small" :disabled="isBtnDisabled" @click="addDialogVisible=true">添加属性</Button>
           <!-- 静态属性表格 -->
           <el-table :data="onlyTableData" border stripe>
             <!-- 展开行 -->
@@ -71,10 +72,10 @@
                 <!-- 循环渲染Tag标签 -->
                 <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</el-tag>
                 <!-- 输入的文本框 -->
-                <el-input class="input-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
-                </el-input>
+                <Input class="input-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
+                </Input>
                 <!-- 添加按钮 -->
-                <el-button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</el-button>
+                <Button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</Button>
               </template>
             </el-table-column>
             <!-- 索引列 -->
@@ -82,40 +83,43 @@
             <el-table-column label="属性名称" prop="attr_name"></el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button size="mini" type="primary" icon="el-icon-edit" @click="showEditDialog(scope.row.attr_id)">编辑</el-button>
-                <el-button size="mini" type="danger" icon="el-icon-delete" @click="removeParams(scope.row.attr_id)">删除</el-button>
+                <Button size="small" type="primary" @click="showEditDialog(scope.row.attr_id)">编辑</Button>
+                &nbsp;
+                <Button size="small" @click="removeParams(scope.row.attr_id)">删除</Button>
               </template>
             </el-table-column>
           </el-table>
         </el-tab-pane>
       </el-tabs>
-    </el-card>
+    </Card>
 
     <!-- 添加参数的对话框 -->
     <el-dialog :title="'添加' + titleText" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
       <!-- 添加参数的对话框 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
-        <el-form-item :label="titleText" prop="attr_name">
-          <el-input v-model="addForm.attr_name"></el-input>
-        </el-form-item>
-      </el-form>
+      <Form :model="addForm" :rules="addFormRules" ref="addFormRef">
+        <FormItem :label="titleText" prop="attr_name">
+          <Input v-model="addForm.attr_name"></Input>
+        </FormItem>
+      </Form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addParams">确 定</el-button>
+        <Button @click="addDialogVisible = false">取 消</Button>
+        &nbsp;
+        <Button type="primary" @click="addParams">确 定</Button>
       </span>
     </el-dialog>
 
     <!-- 修改参数的对话框 -->
     <el-dialog :title="'修改' + titleText" :visible.sync="editDialogVisible" width="50%" @close="editDialogClosed">
       <!-- 添加参数的对话框 -->
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
-        <el-form-item :label="titleText" prop="attr_name">
-          <el-input v-model="editForm.attr_name"></el-input>
-        </el-form-item>
-      </el-form>
+      <Form :model="editForm" :rules="editFormRules" ref="editFormRef">
+        <FormItem :label="titleText" prop="attr_name">
+          <Input v-model="editForm.attr_name"></Input>
+        </FormItem>
+      </Form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="editDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editParams">确 定</el-button>
+        <Button @click="editDialogVisible = false">取 消</Button>
+        &nbsp;
+        <Button type="primary" @click="editParams">确 定</Button>
       </span>
     </el-dialog>
   </div>

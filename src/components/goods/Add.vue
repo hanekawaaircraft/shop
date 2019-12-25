@@ -29,61 +29,61 @@
 
       <!-- tab栏区域 -->
 
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px" label-position="top">
+      <Form :model="addForm" :rules="addFormRules" ref="addFormRef"  label-position="top">
         <el-tabs v-model="activeIndex" :tab-position="'left'" :before-leave="beforeTabLeave" @tab-click="tabClicked">
           <el-tab-pane label="基本信息" name="0">
-            <el-form-item label="商品名称" prop="goods_name">
-              <el-input v-model="addForm.goods_name"></el-input>
-            </el-form-item>
-            <el-form-item label="商品价格" prop="goods_price">
-              <el-input v-model="addForm.goods_price" type="number"></el-input>
-            </el-form-item>
-            <el-form-item label="商品重量" prop="goods_weight">
-              <el-input v-model="addForm.goods_weight" type="number"></el-input>
-            </el-form-item>
-            <el-form-item label="商品数量" prop="goods_number">
-              <el-input v-model="addForm.goods_number" type="number"></el-input>
-            </el-form-item>
-            <el-form-item label="商品分类" prop="goods_cat">
+            <FormItem label="商品名称" prop="goods_name">
+              <Input v-model="addForm.goods_name"></Input>
+            </FormItem>
+            <FormItem label="商品价格" prop="goods_price">
+              <Input v-model="addForm.goods_price" type="number"></Input>
+            </FormItem>
+            <FormItem label="商品重量" prop="goods_weight">
+              <Input v-model="addForm.goods_weight" type="number"></Input>
+            </FormItem>
+            <FormItem label="商品数量" prop="goods_number">
+              <Input v-model="addForm.goods_number" type="number"></Input>
+            </FormItem>
+            <FormItem label="商品分类" prop="goods_cat">
               <el-cascader expand-trigger="hover" :options="catelist" :props="cateProps" v-model="addForm.goods_cat" @change="handleChange">
               </el-cascader>
-            </el-form-item>
+            </FormItem>
           </el-tab-pane>
           <el-tab-pane label="商品参数" name="1">
             <!-- 渲染表单的Item项 -->
-            <el-form-item :label="item.attr_name" v-for="item in manyTableData" :key="item.attr_id">
+            <FormItem :label="item.attr_name" v-for="item in manyTableData" :key="item.attr_id">
               <!-- 复选框组 -->
               <el-checkbox-group v-model="item.attr_vals">
                 <el-checkbox :label="cb" v-for="(cb, i) in item.attr_vals" :key="i" border></el-checkbox>
               </el-checkbox-group>
-            </el-form-item>
+            </FormItem>
           </el-tab-pane>
           <el-tab-pane label="商品属性" name="2">
-            <el-form-item :label="item.attr_name" v-for="item in onlyTableData" :key="item.attr_id">
-              <el-input v-model="item.attr_vals"></el-input>
-            </el-form-item>
+            <FormItem :label="item.attr_name" v-for="item in onlyTableData" :key="item.attr_id">
+              <Input v-model="item.attr_vals"></Input>
+            </FormItem>
           </el-tab-pane>
           <el-tab-pane label="商品图片" name="3">
             <!-- action 表示图片要上传到的后台API地址 -->
-            <el-upload :action="uploadURL" :on-preview="handlePreview" :on-remove="handleRemove" list-type="picture" :headers="headerObj" :on-success="handleSuccess">
+            <Upload :action="uploadURL" :on-preview="handlePreview" :on-remove="handleRemove" list-type="picture" :headers="headerObj" :on-success="handleSuccess">
               <el-button size="small" type="primary">点击上传</el-button>
-            </el-upload>
+            </Upload>
           </el-tab-pane>
           <el-tab-pane label="商品内容" name="4">
             <!-- 富文本编辑器组件 -->
             <quill-editor v-model="addForm.goods_introduce"></quill-editor>
             <!-- 添加商品的按钮 -->
-            <el-button type="primary" class="btnAdd" @click="add">添加商品</el-button>
+            <Button type="primary" class="btnAdd" @click="add">添加商品</Button>
           </el-tab-pane>
         </el-tabs>
-      </el-form>
+      </Form>
 
     </Card>
 
     <!-- 图片预览 -->
-    <el-dialog title="图片预览" :visible.sync="previewVisible" width="50%">
+    <Modal title="图片预览" v-model="previewVisible" width="50%">
       <img :src="previewPath" alt="" class="previewImg">
-    </el-dialog>
+    </Modal>
   </div>
 </template>
 
