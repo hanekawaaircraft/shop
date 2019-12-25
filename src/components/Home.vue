@@ -90,7 +90,7 @@ export default {
             },
             {
               id: 121,
-              authName: "商品分类",
+              authName: "分类列表",
               path: "cate",
               children: [],
             },
