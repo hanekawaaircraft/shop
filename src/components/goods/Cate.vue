@@ -14,12 +14,12 @@
     </Breadcrumb>
 
     <!-- 卡片视图区域 -->
-    <el-card>
-      <el-row>
-        <el-col>
-          <el-button type="primary" @click="showAddCateDialog">添加分类</el-button>
-        </el-col>
-      </el-row>
+    <Card>
+      <Row>
+        <Col>
+          <Button type="primary" @click="showAddCateDialog">添加分类</Button>
+        </Col>
+      </Row>
 
       <!-- 表格 -->
       <tree-table class="treeTable" :data="catelist" :columns="columns" :selection-type="false" :expand-type="false" show-index index-text="#" border :show-row-hover="false">
@@ -30,21 +30,27 @@
         </template>
         <!-- 排序 -->
         <template slot="order" slot-scope="scope">
-          <el-tag size="mini" v-if="scope.row.cat_level===0">一级</el-tag>
-          <el-tag type="success" size="mini" v-else-if="scope.row.cat_level===1">二级</el-tag>
-          <el-tag type="warning" size="mini" v-else>三级</el-tag>
+          <Tag v-if="scope.row.cat_level===0">一级</Tag>
+          <Tag color="success" v-else-if="scope.row.cat_level===1">二级</Tag>
+          <Tag color="warning" v-else>三级</Tag>
         </template>
         <!-- 操作 -->
         <template slot="opt">
-          <el-button type="primary" icon="el-icon-edit" size="mini">编辑</el-button>
-          <el-button type="danger" icon="el-icon-delete" size="mini">删除</el-button>
+          <Button color="primary">编辑</Button>
+          &nbsp;
+          <Button color="danger">删除</Button>
         </template>
       </tree-table>
 
       <!-- 分页区域 -->
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="querInfo.pagenum" :page-sizes="[3, 5, 10, 15]" :page-size="querInfo.pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
-      </el-pagination>
-    </el-card>
+      <Page 
+        :total="total" 
+        show-sizer 
+        @on-change="handleCurrentChange"
+        @on-page-size-change="handleSizeChange"
+        show-total
+      />
+    </Card>
 
     <!-- 添加分类的对话框 -->
     <el-dialog title="添加分类" :visible.sync="addCateDialogVisible" width="50%" @close="addCateDialogClosed">
@@ -90,23 +96,17 @@ export default {
         },
         {
           label: '是否有效',
-          // 表示，将当前列定义为模板列
           type: 'template',
-          // 表示当前这一列使用模板名称
           template: 'isok'
         },
         {
           label: '排序',
-          // 表示，将当前列定义为模板列
           type: 'template',
-          // 表示当前这一列使用模板名称
           template: 'order'
         },
         {
           label: '操作',
-          // 表示，将当前列定义为模板列
           type: 'template',
-          // 表示当前这一列使用模板名称
           template: 'opt'
         }
       ],
