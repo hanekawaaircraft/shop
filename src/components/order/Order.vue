@@ -23,8 +23,8 @@
         <el-table-column label="订单价格" prop="order_price"></el-table-column>
         <el-table-column label="是否付款" prop="pay_status">
           <template slot-scope="scope">
-            <el-tag type="success" v-if="scope.row.pay_status === '1'">已付款</el-tag>
-            <el-tag type="danger" v-else>未付款</el-tag>
+            <Tag color="success" v-if="scope.row.pay_status === '1'">已付款</Tag>
+            <Tag color="danger" v-else>未付款</Tag>
           </template>
         </el-table-column>
         <el-table-column label="是否发货" prop="is_send">
@@ -41,15 +41,22 @@
         </el-table-column>
         <el-table-column label="操作">
           <template>
-            <el-button size="mini" type="primary" icon="el-icon-edit" @click="showBox"></el-button>
-            <el-button size="mini" type="success" icon="el-icon-location" @click="showProgressBox"></el-button>
+            <Icon type="ios-cog" size="30" @click="showBox"/>
+            <Icon type="ios-bus" size="30" @click="showProgressBox"/>
           </template>
         </el-table-column>
       </el-table>
 
       <!-- 分页区域 -->
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pagenum" :page-sizes="[5, 10, 15]" :page-size="queryInfo.pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
-      </el-pagination>
+      <!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pagenum" :page-sizes="[5, 10, 15]" :page-size="queryInfo.pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      </el-pagination> -->
+       <Page 
+        :total="total" 
+        show-sizer 
+        @on-change="handleCurrentChange"
+        @on-page-size-change="handleSizeChange"
+        show-total
+      />
     </Card>
 
     <!-- 修改地址的对话框 -->
@@ -162,5 +169,8 @@ export default {
 <style lang="less" scoped>
 .el-cascader {
   width: 100%;
+}
+.ivu-page{
+  margin-top: 15px;
 }
 </style>

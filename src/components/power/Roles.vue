@@ -14,43 +14,39 @@
     </Breadcrumb>
 
     <!-- 卡片视图 -->
-    <el-card>
+    <Card>
       <!-- 添加角色按钮区域 -->
-      <el-row>
-        <el-col>
-          <el-button type="primary">添加角色</el-button>
-        </el-col>
-      </el-row>
+      <Row>
+        <Col>
+          <Button color="primary">添加角色</Button>
+        </Col>
+      </Row>
 
       <!-- 角色列表区域 -->
       <el-table :data="rolelist" border stripe>
         <!-- 展开列 -->
         <el-table-column type="expand">
           <template slot-scope="scope">
-            <el-row :class="['bdbottom', i1 === 0 ? 'bdtop' : '', 'vcenter']" v-for="(item1, i1) in scope.row.children" :key="item1.id">
+            <Row :class="['bdbottom', i1 === 0 ? 'bdtop' : '', 'vcenter']" v-for="(item1, i1) in scope.row.children" :key="item1.id">
               <!-- 渲染一级权限 -->
-              <el-col :span="5">
-                <el-tag closable @close="removeRightById(scope.row, item1.id)">{{item1.authName}}</el-tag>
+              <Col :span="5">
+                <Tag closable @close="removeRightById(scope.row, item1.id)">{{item1.authName}}</Tag>
                 <i class="el-icon-caret-right"></i>
-              </el-col>
+              </Col>
               <!-- 渲染二级和三级权限 -->
-              <el-col :span="19">
+              <Col :span="19">
                 <!-- 通过 for 循环 嵌套渲染二级权限 -->
-                <el-row :class="[i2 === 0 ? '' : 'bdtop', 'vcenter']" v-for="(item2, i2) in item1.children" :key="item2.id">
-                  <el-col :span="6">
-                    <el-tag type="success" closable @close="removeRightById(scope.row, item2.id)">{{item2.authName}}</el-tag>
+                <Row :class="[i2 === 0 ? '' : 'bdtop', 'vcenter']" v-for="(item2, i2) in item1.children" :key="item2.id">
+                  <Col :span="6">
+                    <Tag color="success" closable @close="removeRightById(scope.row, item2.id)">{{item2.authName}}</Tag>
                     <i class="el-icon-caret-right"></i>
-                  </el-col>
-                  <el-col :span="18">
-                    <el-tag type="warning" v-for="item3 in item2.children" :key="item3.id" closable @close="removeRightById(scope.row, item3.id)">{{item3.authName}}</el-tag>
-                  </el-col>
-                </el-row>
-              </el-col>
-            </el-row>
-
-            <!-- <pre>
-              {{scope.row}}
-            </pre> -->
+                  </Col>
+                  <Col :span="18">
+                    <Tag color="warning" v-for="item3 in item2.children" :key="item3.id" closable @close="removeRightById(scope.row, item3.id)">{{item3.authName}}</Tag>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
           </template>
         </el-table-column>
         <!-- 索引列 -->
@@ -59,23 +55,25 @@
         <el-table-column label="角色描述" prop="roleDesc"></el-table-column>
         <el-table-column label="操作" width="300px">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" icon="el-icon-edit">编辑</el-button>
-            <el-button size="mini" type="danger" icon="el-icon-delete">删除</el-button>
-            <el-button size="mini" type="warning" icon="el-icon-setting" @click="showSetRightDialog(scope.row)">分配权限</el-button>
+            <Button type="primary">编辑</Button>
+            &nbsp;
+            <Button type="info">删除</Button>
+            &nbsp;
+            <Button type="success" @click="showSetRightDialog(scope.row)">分配权限</Button>
           </template>
         </el-table-column>
       </el-table>
-    </el-card>
+    </Card>
 
     <!-- 分配权限的对话框 -->
-    <el-dialog title="分配权限" :visible.sync="setRightDialogVisible" width="50%" @close="setRightDialogClosed">
+    <Modal title="分配权限" v-model="setRightDialogVisible" width="50%" @close="setRightDialogClosed">
       <!-- 树形控件 -->
       <el-tree :data="rightslist" :props="treeProps" show-checkbox node-key="id" default-expand-all :default-checked-keys="defKeys" ref="treeRef"></el-tree>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="setRightDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="allotRights">确 定</el-button>
+        <Button @click="setRightDialogVisible = false">取 消</Button>
+        <Button color="primary" @click="allotRights">确 定</Button>
       </span>
-    </el-dialog>
+    </Modal>
   </div>
 </template>
 
