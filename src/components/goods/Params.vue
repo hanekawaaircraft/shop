@@ -16,7 +16,7 @@
     <!-- 卡片视图区域 -->
     <Card>
       <!-- 警告区域 -->
-      <el-alert show-icon title="注意：只允许为第三级分类设置相关参数！" type="warning" :closable="false"></el-alert>
+      <Alert show-icon type="warning" :closable="false">注意：只允许为第三级分类设置相关参数！</Alert>
 
       <!-- 选择商品分类区域 -->
       <Row class="cat_opt">
@@ -34,6 +34,7 @@
         <el-tab-pane label="动态参数" name="many">
           <!-- 添加参数的按钮 -->
           <Button type="primary" size="small" :disabled="isBtnDisabled" @click="addDialogVisible=true">添加参数</Button>
+
           <!-- 动态参数表格 -->
           <el-table :data="manyTableData" border stripe>
             <!-- 展开行 -->

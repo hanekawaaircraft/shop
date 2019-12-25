@@ -22,55 +22,25 @@
         </Col>
       </Row>
 
-      <!-- 角色列表区域 -->
-      <el-table :data="rolelist" border stripe>
-        <!-- 展开列 -->
-        <el-table-column type="expand">
-          <template slot-scope="scope">
-            <Row :class="['bdbottom', i1 === 0 ? 'bdtop' : '', 'vcenter']" v-for="(item1, i1) in scope.row.children" :key="item1.id">
-              <!-- 渲染一级权限 -->
-              <Col :span="5">
-                <Tag closable @close="removeRightById(scope.row, item1.id)">{{item1.authName}}</Tag>
-                <i class="el-icon-caret-right"></i>
-              </Col>
-              <!-- 渲染二级和三级权限 -->
-              <Col :span="19">
-                <!-- 通过 for 循环 嵌套渲染二级权限 -->
-                <Row :class="[i2 === 0 ? '' : 'bdtop', 'vcenter']" v-for="(item2, i2) in item1.children" :key="item2.id">
-                  <Col :span="6">
-                    <Tag color="success" closable @close="removeRightById(scope.row, item2.id)">{{item2.authName}}</Tag>
-                    <i class="el-icon-caret-right"></i>
-                  </Col>
-                  <Col :span="18">
-                    <Tag color="warning" v-for="item3 in item2.children" :key="item3.id" closable @close="removeRightById(scope.row, item3.id)">{{item3.authName}}</Tag>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </template>
-        </el-table-column>
-        <!-- 索引列 -->
-        <el-table-column type="index"></el-table-column>
-        <el-table-column label="角色名称" prop="roleName"></el-table-column>
-        <el-table-column label="角色描述" prop="roleDesc"></el-table-column>
-        <el-table-column label="操作" width="300px">
-          <template slot-scope="scope">
-            <Button type="primary">编辑</Button>
-            &nbsp;
-            <Button type="info">删除</Button>
-            &nbsp;
-            <Button type="success" @click="showSetRightDialog(scope.row)">分配权限</Button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <Table border :columns="columns" :data="rolelist">
+        <template slot-scope="scope" slot="active">
+          <Button type="primary">编辑</Button>
+          &nbsp;
+          <Button type="info">删除</Button>
+          &nbsp;
+          <Button type="success" @click="showSetRightDialog(scope.row)">分配权限</Button>
+        </template>
+      </Table>
+
+
     </Card>
 
     <!-- 分配权限的对话框 -->
-    <Modal title="分配权限" v-model="setRightDialogVisible" width="50%" @close="setRightDialogClosed">
+    <Modal title="分配权限" v-model="setRightShow" width="50%" @close="setRightHide">
       <!-- 树形控件 -->
       <el-tree :data="rightslist" :props="treeProps" show-checkbox node-key="id" default-expand-all :default-checked-keys="defKeys" ref="treeRef"></el-tree>
       <span slot="footer" class="dialog-footer">
-        <Button @click="setRightDialogVisible = false">取 消</Button>
+        <Button @click="setRightShow = false">取 消</Button>
         <Button color="primary" @click="allotRights">确 定</Button>
       </span>
     </Modal>
@@ -81,10 +51,32 @@
 export default {
   data() {
     return {
+      //iview渲染表格
+       columns: [
+        {
+          type:'index',
+          width: 60,
+          align: 'center'
+        },
+        {
+          title: '角色名称',
+          key: 'roleName'
+        },
+        {
+          title: '角色描述',
+          key: 'roleDesc',
+        },
+        {
+          title: '操作',
+          key: 'active',
+          slot:'active',
+          width:350
+        }
+       ],
       // 所有角色列表数据
       rolelist: [],
       // 控制分配权限对话框的显示与隐藏
-      setRightDialogVisible: false,
+      setRightShow: false,
       // 所有权限的数据
       rightslist: [],
       // 树形控件的属性绑定对象
@@ -159,7 +151,7 @@ export default {
       // 递归获取三级节点的Id
       this.getLeafKeys(role, this.defKeys)
 
-      this.setRightDialogVisible = true
+      this.setRightShow = true
     },
     // 通过递归的形式，获取角色下所有三级权限的id，并保存到 defKeys 数组中
     getLeafKeys(node, arr) {
@@ -171,7 +163,7 @@ export default {
       node.children.forEach(item => this.getLeafKeys(item, arr))
     },
     // 监听分配权限对话框的关闭事件
-    setRightDialogClosed() {
+    setRightHide() {
       this.defKeys = []
     },
     // 点击为角色分配权限
@@ -194,27 +186,16 @@ export default {
 
       this.$message.success('分配权限成功！')
       this.getRolesList()
-      this.setRightDialogVisible = false
+      this.setRightShow = false
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.el-tag {
-  margin: 7px;
+.ivu-col{
+  margin-bottom: 10px;
 }
 
-.bdtop {
-  border-top: 1px solid #eee;
-}
 
-.bdbottom {
-  border-bottom: 1px solid #eee;
-}
-
-.vcenter {
-  display: flex;
-  align-items: center;
-}
 </style>
