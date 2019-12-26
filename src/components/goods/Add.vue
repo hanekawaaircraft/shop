@@ -65,7 +65,7 @@
           </TabPane>
           <TabPane label="商品图片" name="3">
             <!-- action 表示图片要上传到的后台API地址 -->
-            <Upload :action="uploadURL" :on-preview="handlePreview" :on-remove="handleRemove" list-type="picture" :headers="headerObj" :on-success="handleSuccess">
+            <Upload :action="uploadURL" :on-preview="handlePhoto" :on-remove="handleRemove" list-type="picture" :headers="headerObj" :on-success="handleSuccess">
               <Button size="small" type="primary">点击上传</Button>
             </Upload>
           </TabPane>
@@ -80,8 +80,8 @@
     </Card>
 
     <!-- 图片预览 -->
-    <Modal title="图片预览" v-model="previewVisible" width="50%">
-      <img :src="previewPath" alt="" class="previewImg">
+    <Modal title="图片预览" v-model="photoShow" width="50%">
+      <img :src="photoPath" alt="" class="previewImg">
     </Modal>
   </div>
 </template>
@@ -121,7 +121,7 @@ export default {
           { required: true, message: '请输入商品数量', trigger: 'blur' }
         ],
         goods_cat: [
-          { message: '请选择商品分类', trigger: 'blur' }
+          { required: true, message: '请选择商品分类', trigger: 'blur' }
         ]
       },
       // 商品分类列表
@@ -141,8 +141,8 @@ export default {
       headerObj: {
         Authorization: window.sessionStorage.getItem('token')
       },
-      previewPath: '',
-      previewVisible: false
+      photoPath: '',
+      photoShow: false
     }
   },
   created() {
@@ -210,10 +210,10 @@ export default {
       }
     },
     // 处理图片预览效果
-    handlePreview(file) {
+    handlePhoto(file) {
       console.log(file)
-      this.previewPath = file.response.data.url
-      this.previewVisible = true
+      this.photoPath = file.response.data.url
+      this.photoShow = true
     },
     // 处理移除图片的操作
     handleRemove(file) {

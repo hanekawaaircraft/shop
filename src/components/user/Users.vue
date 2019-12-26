@@ -23,7 +23,7 @@
         </template>
         <template slot-scope="scope" slot="active">
           <!-- 修改按钮 -->
-          <Icon type="md-settings" size="30" @click="showEditDialog(scope.row.id)"/>
+          <Icon type="md-settings" size="30" @click="showEditModal(scope.row.id)"/>
           <!-- 删除按钮 -->
           <Icon type="ios-trash" size="32" @click="removeUserById(scope.row.id)"/>
           <!-- 分配角色按钮 -->
@@ -37,14 +37,14 @@
       <Page 
         :total="total" 
         show-sizer 
-        @on-change="handleCurrentChange"
-        @on-page-size-change="handleSizeChange"
+        @on-change="PageChange"
+        @on-page-size-change="PageSizeChange"
         show-total
       />
     </Card>
 
     <!-- 添加用户的对话框 -->
-    <Modal title="添加用户" v-model="addDialogVisible" width="50%" @close="addDialogClosed">
+    <Modal title="添加用户" v-model="addModalShow" width="50%" @close="addModalHide">
       <!-- 内容主体区域 -->
       <Form :model="addForm" :rules="addFormRules" ref="addFormRef">
         <FormItem label="用户名" prop="username">
@@ -62,14 +62,14 @@
       </Form>
       <!-- 底部区域 -->
       <span slot="footer" class="dialog-footer">
-        <Button @click="addDialogVisible = false">取 消</Button>
+        <Button @click="addModalShow = false">取 消</Button>
         &nbsp;
         <Button type="primary" @click="addUser">确 定</Button>
       </span>
     </Modal>
 
     <!-- 修改用户的对话框 -->
-    <Modal title="修改用户" v-model="editDialogVisible" width="50%" @close="editDialogClosed">
+    <Modal title="修改用户" v-model="editModalShow" width="50%" @close="addModalHide">
       <Form :model="editForm" :rules="editFormRules" ref="editFormRef">
         <FormItem label="用户名">
           <Input v-model="editForm.username" disabled></Input>
@@ -82,14 +82,14 @@
         </FormItem>
       </Form>
       <span slot="footer" class="dialog-footer">
-        <Button @click="editDialogVisible = false">取 消</Button>
+        <Button @click="editModalShow = false">取 消</Button>
         &nbsp;
         <Button type="primary" @click="editUserInfo">确 定</Button>
       </span>
     </Modal>
 
     <!-- 分配角色的对话框 -->
-    <Modal title="分配角色" v-model="setRoleDialogVisible" width="50%" @close="setRoleDialogClosed">
+    <Modal title="分配角色" v-model="setRoleModalShow" width="50%" @close="setRoleDialogClosed">
       <div>
         <p>当前的用户：{{userInfo.username}}</p>
         <p>当前的角色：{{userInfo.role_name}}</p>
@@ -101,7 +101,7 @@
         </p>
       </div>
       <span slot="footer" class="dialog-footer">
-        <Button @click="setRoleDialogVisible = false">取 消</Button>
+        <Button @click="setRoleModalShow = false">取 消</Button>
         &nbsp;
         <Button type="primary" @click="saveRoleInfo">确 定</Button>
       </span>
@@ -178,7 +178,7 @@ export default {
       ],
       total: 0,
       // 控制添加用户对话框的显示与隐藏
-      addDialogVisible: false,
+      addModalShow: false,
       // 添加用户的表单数据
       addForm: {
         username: '',
@@ -216,7 +216,7 @@ export default {
         ]
       },
       // 控制修改用户对话框的显示与隐藏
-      editDialogVisible: false,
+      editModalShow: false,
       // 查询到的用户信息对象
       editForm: {},
       // 修改表单的验证规则对象
@@ -231,7 +231,7 @@ export default {
         ]
       },
       // 控制分配角色对话框的显示与隐藏
-      setRoleDialogVisible: false,
+      setRoleModalShow: false,
       // 需要被分配角色的用户信息
       userInfo: {},
       // 所有角色的数据列表
@@ -256,13 +256,13 @@ export default {
       console.log(res)
     },
     // 监听 pagesize 改变的事件
-    handleSizeChange(newSize) {
+    PageSizeChange(newSize) {
       // console.log(newSize)
       this.queryInfo.pagesize = newSize
       this.getUserList()
     },
     // 监听 页码值 改变的事件
-    handleCurrentChange(newPage) {
+    PageChange(newPage) {
       console.log(newPage)
       this.queryInfo.pagenum = newPage
       this.getUserList()
@@ -280,7 +280,7 @@ export default {
       this.$message.success('更新用户状态成功！')
     },
     // 监听添加用户对话框的关闭事件
-    addDialogClosed() {
+    addModalHide() {
       this.$refs.addFormRef.resetFields()
     },
     // 点击按钮，添加新用户
@@ -296,13 +296,13 @@ export default {
 
         this.$message.success('添加用户成功！')
         // 隐藏添加用户的对话框
-        this.addDialogVisible = false
+        this.addModalShow = false
         // 重新获取用户列表数据
         this.getUserList()
       })
     },
     // 展示编辑用户的对话框
-    async showEditDialog(id) {
+    async showEditModal(id) {
       // console.log(id)
       const { data: res } = await this.$http.get('users/' + id)
 
@@ -311,10 +311,10 @@ export default {
       }
 
       this.editForm = res.data
-      this.editDialogVisible = true
+      this.editModalShow = true
     },
     // 监听修改用户对话框的关闭事件
-    editDialogClosed() {
+    addModalHide() {
       this.$refs.editFormRef.resetFields()
     },
     // 修改用户信息并提交
@@ -335,7 +335,7 @@ export default {
         }
 
         // 关闭对话框
-        this.editDialogVisible = false
+        this.editModalShow = false
         // 刷新数据列表
         this.getUserList()
         // 提示修改成功
@@ -383,7 +383,7 @@ export default {
 
       this.rolesList = res.data
 
-      this.setRoleDialogVisible = true
+      this.setRoleModalShow = true
     },
     // 点击按钮，分配角色
     async saveRoleInfo() {
@@ -404,7 +404,7 @@ export default {
 
       this.$message.success('更新角色成功！')
       this.getUserList()
-      this.setRoleDialogVisible = false
+      this.setRoleModalShow = false
     },
     // 监听分配角色对话框的关闭事件
     setRoleDialogClosed() {

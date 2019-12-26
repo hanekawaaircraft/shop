@@ -17,7 +17,7 @@
     <!-- 卡片视图区域 -->
     <Card>
       <!-- 订单列表数据 -->
-      <Table border :columns="columns12" :data="orderlist">
+      <Table border :columns="columns" :data="orderlist">
         <template slot-scope="scope" slot="pay_status">
           <Tag color="success" v-if="scope.row.pay_status === '1'">已付款</Tag>
           <Tag color="default" v-else>未付款</Tag>
@@ -39,8 +39,8 @@
        <Page 
         :total="total" 
         show-sizer 
-        @on-change="handleCurrentChange"
-        @on-page-size-change="handleSizeChange"
+        @on-change="PageChange"
+        @on-page-size-change="PageSizeChange"
         show-total
       />
     </Card>
@@ -80,7 +80,7 @@ export default {
   data() {
     return {
       //iview渲染表格
-      columns12: [
+      columns: [
         {
           type:'index',
           width: 60,
@@ -157,11 +157,11 @@ export default {
       this.total = res.data.total
       this.orderlist = res.data.goods
     },
-    handleSizeChange(newSize) {
+    PageSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
       this.getOrderList()
     },
-    handleCurrentChange(newPage) {
+    PageChange(newPage) {
       this.queryInfo.pagenum = newPage
       this.getOrderList()
     },

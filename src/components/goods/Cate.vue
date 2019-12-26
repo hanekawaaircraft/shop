@@ -40,8 +40,8 @@
       <Page 
         :total="total" 
         show-sizer 
-        @on-change="handleCurrentChange"
-        @on-page-size-change="handleSizeChange"
+        @on-change="PageChange"
+        @on-page-size-change="PageSizeChange"
         show-total
       />
     </Card>
@@ -132,12 +132,12 @@ export default {
       this.total = res.data.total
     },
     //pagesize 
-    handleSizeChange(newSize) {
+    PageSizeChange(newSize) {
       this.querInfo.pagesize = newSize
       this.getCateList()
     },
     //pagenum
-    handleCurrentChange(newPage) {
+    PageChange(newPage) {
       this.querInfo.pagenum = newPage
       this.getCateList()
     }

@@ -15,7 +15,7 @@
 
     <!-- 卡片视图 -->
     <Card>
-      <Table border :columns="columns12" :data="rightsList">
+      <Table border :columns="columns" :data="rightsList">
         <template slot-scope="scope" slot="level">
           <Tag v-if="scope.row.level==='0'">一级</Tag>
           <Tag color="green" v-else-if="scope.row.level==='1'">二级</Tag>
@@ -32,7 +32,7 @@ export default {
     return {
       // 权限列表
       rightsList: [],
-      columns12: [
+      columns: [
         {
             type:'index',
             width: 60,

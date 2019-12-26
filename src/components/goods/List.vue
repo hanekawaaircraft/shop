@@ -27,7 +27,7 @@
       </Row>
 
       <!-- table表格区域 -->
-      <Table border :columns="columns12" :data="goodslist">
+      <Table border :columns="columns" :data="goodslist">
         <template slot-scope="scope" slot="add_time">
             {{scope.row.add_time | dateFormat}}
         </template>
@@ -39,8 +39,8 @@
       <Page 
         :total="total" 
         show-sizer 
-        @on-change="handleCurrentChange"
-        @on-page-size-change="handleSizeChange"
+        @on-change="PageChange"
+        @on-page-size-change="PageSizeChange"
         show-total
       />
     </Card>
@@ -60,7 +60,7 @@ export default {
       // 商品列表
       goodslist: [],
       //iview渲染列表
-      columns12: [
+      columns: [
         {
           type:'index',
           width: 60,
@@ -131,11 +131,11 @@ export default {
       this.total = res.data.total
       this.goodid=res.data.goods_id
     },
-    handleSizeChange(newSize) {
+    PageSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
       this.getGoodsList()
     },
-    handleCurrentChange(newPage) {
+    PageChange(newPage) {
       this.queryInfo.pagenum = newPage
       this.getGoodsList()
     },

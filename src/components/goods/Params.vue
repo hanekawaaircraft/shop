@@ -33,20 +33,20 @@
         <!-- 添加动态参数的面板 -->
         <TabPane label="动态参数" name="many">
           <!-- 添加参数的按钮 -->
-          <Button type="primary" size="small" :disabled="isBtnDisabled" @click="addDialogVisible=true" class="buttonAdd">添加参数</Button>
+          <Button type="primary" size="small" :disabled="isBtnHide" @click="addModalShow=true" class="buttonAdd">添加参数</Button>
           <!-- 动态参数表格 -->
-          <Table border :columns="columns12" :data="manyTableData">
+          <Table border :columns="columns" :data="manyTableData">
             <template slot-scope="scope" slot="attribute">
               <!-- 循环渲染Tag标签 -->
               <Tag color="primary" v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</Tag>
               <!-- 输入的文本框 -->
-              <Input class="input-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
+              <Input class="input-new-tag" v-if="scope.row.inputShow" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
               </Input>
               <!-- 添加按钮 -->
               <Button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</Button>
             </template>
             <template slot-scope="scope" slot="active">
-              <Button size="small" type="primary" @click="showEditDialog(scope.row.attr_id)">编辑</Button>
+              <Button size="small" type="primary" @click="showEditModal(scope.row.attr_id)">编辑</Button>
               &nbsp;
               <Button size="small" @click="removeParams(scope.row.attr_id)">删除</Button>
             </template>
@@ -55,20 +55,20 @@
         <!-- 添加静态属性的面板 -->
         <TabPane label="静态属性" name="only">
           <!-- 添加属性的按钮 -->
-          <Button type="primary" size="small" :disabled="isBtnDisabled" @click="addDialogVisible=true" class="buttonAdd">添加属性</Button>
+          <Button type="primary" size="small" :disabled="isBtnHide" @click="addModalShow=true" class="buttonAdd">添加属性</Button>
           <!-- 静态属性表格 -->
-          <Table border :columns="columns12" :data="onlyTableData">
+          <Table border :columns="columns" :data="onlyTableData">
             <template slot-scope="scope" slot="attribute">
               <!-- 循环渲染Tag标签 -->
               <Tag color="primary" v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</Tag>
               <!-- 输入的文本框 -->
-              <Input class="input-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
+              <Input class="input-new-tag" v-if="scope.row.inputShow" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
               </Input>
               <!-- 添加按钮 -->
               <Button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</Button>
             </template>
             <template slot-scope="scope" slot="active">
-              <Button size="small" type="primary" @click="showEditDialog(scope.row.attr_id)">编辑</Button>
+              <Button size="small" type="primary" @click="showEditModal(scope.row.attr_id)">编辑</Button>
               &nbsp;
               <Button size="small" @click="removeParams(scope.row.attr_id)">删除</Button>
             </template>
@@ -78,7 +78,7 @@
     </Card>
 
     <!-- 添加参数的对话框 -->
-    <Modal :title="'添加' + titleText" v-model="addDialogVisible" width="50%" @close="addDialogClosed">
+    <Modal :title="'添加' + titleText" v-model="addModalShow" width="50%" @close="addModalHide">
       <!-- 添加参数的对话框 -->
       <Form :model="addForm" :rules="addFormRules" ref="addFormRef">
         <FormItem :label="titleText" prop="attr_name">
@@ -86,22 +86,22 @@
         </FormItem>
       </Form>
       <span slot="footer" class="dialog-footer">
-        <Button @click="addDialogVisible = false">取 消</Button>
+        <Button @click="addModalShow = false">取 消</Button>
         &nbsp;
         <Button type="primary" @click="addParams">确 定</Button>
       </span>
     </Modal>
 
     <!-- 修改参数的对话框 -->
-    <Modal :title="'修改' + titleText" v-model="editDialogVisible" width="50%" @close="editDialogClosed">
+    <Modal :title="'修改' + titleText" v-model="editModalShow" width="50%" @close="editDialogClosed">
       <!-- 添加参数的对话框 -->
-      <Form :model="editForm" :rules="editFormRules" ref="editFormRef">
+      <Form :model="editForm" :rules="editRules" ref="editFormRef">
         <FormItem :label="titleText" prop="attr_name">
           <Input v-model="editForm.attr_name"></Input>
         </FormItem>
       </Form>
       <span slot="footer" class="dialog-footer">
-        <Button @click="editDialogVisible = false">取 消</Button>
+        <Button @click="editModalShow = false">取 消</Button>
         &nbsp;
         <Button type="primary" @click="editParams">确 定</Button>
       </span>
@@ -114,7 +114,7 @@ export default {
   data() {
     return {
       //iview渲染动态参数表格
-      columns12: [
+      columns: [
         {
           type:'index',
           width: 60,
@@ -154,7 +154,7 @@ export default {
       // 静态属性的数据
       onlyTableData: [],
       // 控制添加对话框的显示与隐藏
-      addDialogVisible: false,
+      addModalShow: false,
       // 添加参数的表单数据对象
       addForm: {
         attr_name: ''
@@ -166,11 +166,11 @@ export default {
         ]
       },
       // 控制修改对话框的显示与隐藏
-      editDialogVisible: false,
+      editModalShow: false,
       // 修改的表单数据对象
       editForm: {},
       // 修改表单的验证规则对象
-      editFormRules: {
+      editRules: {
         attr_name: [
           { required: true, message: '请输入参数名称', trigger: 'blur' }
         ]
@@ -228,7 +228,7 @@ export default {
       res.data.forEach(item => {
         item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : []
         // 控制文本框的显示与隐藏
-        item.inputVisible = false
+        item.inputShow = false
         // 文本框中输入的值
         item.inputValue = ''
       })
@@ -241,7 +241,7 @@ export default {
       }
     },
     // 监听添加对话框的关闭事件
-    addDialogClosed() {
+    addModalHide() {
       this.$refs.addFormRef.resetFields()
     },
     // 点击按钮，添加参数
@@ -261,12 +261,12 @@ export default {
         }
 
         this.$message.success('添加参数成功！')
-        this.addDialogVisible = false
+        this.addModalShow = false
         this.getParamsData()
       })
     },
     // 点击按钮，展示修改的对话框
-    async showEditDialog(attrId) {
+    async showEditModal(attrId) {
       // 查询当前参数的信息
       const { data: res } = await this.$http.get(
         `categories/${this.cateId}/attributes/${attrId}`,
@@ -280,7 +280,7 @@ export default {
       }
 
       this.editForm = res.data
-      this.editDialogVisible = true
+      this.editModalShow = true
     },
     // 重置修改的表单
     editDialogClosed() {
@@ -301,7 +301,7 @@ export default {
 
         this.$message.success('修改参数成功！')
         this.getParamsData()
-        this.editDialogVisible = false
+        this.editModalShow = false
       })
     },
     // 根据Id删除对应的参数项
@@ -337,13 +337,13 @@ export default {
     async handleInputConfirm(row) {
       if (row.inputValue.trim().length === 0) {
         row.inputValue = ''
-        row.inputVisible = false
+        row.inputShow = false
         return
       }
       // 如果没有return，则证明输入的内容，需要做后续处理
       row.attr_vals.push(row.inputValue.trim())
       row.inputValue = ''
-      row.inputVisible = false
+      row.inputShow = false
       // 需要发起请求，保存这次操作
       this.saveAttrVals(row)
     },
@@ -367,7 +367,7 @@ export default {
     },
     // 点击按钮，展示文本输入框
     showInput(row) {
-      row.inputVisible = true
+      row.inputShow = true
       // 让文本框自动获得焦点
       // $nextTick 方法的作用，就是当页面上元素被重新渲染之后，才会指定回调函数中的代码
       this.$nextTick(_ => {
@@ -382,7 +382,7 @@ export default {
   },
   computed: {
     // 如果按钮需要被禁用，则返回true，否则返回false
-    isBtnDisabled() {
+    isBtnHide() {
       if (this.selectedCateKeys.length !== 3) {
         return true
       }

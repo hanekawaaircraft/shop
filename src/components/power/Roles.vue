@@ -28,7 +28,7 @@
           &nbsp;
           <Button type="info">删除</Button>
           &nbsp;
-          <Button type="success" @click="showSetRightDialog(scope.row)">分配权限</Button>
+          <Button type="success" @click="showSetRightModal(scope.row)">分配权限</Button>
         </template>
       </Table>
 
@@ -135,7 +135,7 @@ export default {
       role.children = res.data
     },
     // 展示分配权限的对话框
-    async showSetRightDialog(role) {
+    async showSetRightModal(role) {
       this.roleId = role.id
       // 获取所有权限的数据
       const { data: res } = await this.$http.get('rights/tree')
