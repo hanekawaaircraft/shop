@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 面包屑导航区域 -->
-    <Breadcrumb separator-class="el-icon-arrow-right">
+    <Breadcrumb>
         <BreadcrumbItem :to="{ path: '/home' }">
           <Icon type="ios-home-outline"></Icon> 首页
         </BreadcrumbItem>

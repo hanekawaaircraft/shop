@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 面包屑导航区域 -->
-    <Breadcrumb separator-class="el-icon-arrow-right">
+    <Breadcrumb>
         <BreadcrumbItem :to="{ path: '/home' }">
           <Icon type="ios-home-outline"></Icon> 首页
         </BreadcrumbItem>
@@ -20,7 +20,7 @@
       <Table border :columns="columns12" :data="orderlist">
         <template slot-scope="scope" slot="pay_status">
           <Tag color="success" v-if="scope.row.pay_status === '1'">已付款</Tag>
-          <Tag color="info" v-else>未付款</Tag>
+          <Tag color="default" v-else>未付款</Tag>
         </template>
         <template slot-scope="scope" slot="is_send">
           <template>

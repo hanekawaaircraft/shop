@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 面包屑导航区域 -->
-    <Breadcrumb separator-class="el-icon-arrow-right">
+    <Breadcrumb>
       <BreadcrumbItem :to="{ path: '/home' }">
         <Icon type="ios-home-outline"></Icon> 首页
       </BreadcrumbItem>
@@ -15,8 +15,8 @@
     <!-- 卡片视图 -->
     <Card>
       <!-- 提示区域 -->
-      <el-alert title="添加商品信息" type="info" center show-icon :closable="false">
-      </el-alert>
+      <Alert type="info" center show-icon :closable="false">添加商品信息
+      </Alert>
       <!-- 步骤条区域 -->
       <Steps :space="200" :current="activeIndex - 0" status="finish" align-center >
         <Step title="基本信息" content=""></Step>
@@ -286,9 +286,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.el-checkbox {
-  margin: 0 10px 0 0 !important;
-}
+// .el-checkbox {
+//   margin: 0 10px 0 0 !important;
+// }
 
 .previewImg {
   width: 100%;
