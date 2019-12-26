@@ -17,39 +17,25 @@
     <!-- 卡片视图区域 -->
     <Card>
       <!-- 订单列表数据 -->
-      <el-table :data="orderlist" border stripe>
-        <el-table-column type="index"></el-table-column>
-        <el-table-column label="订单编号" prop="order_number"></el-table-column>
-        <el-table-column label="订单价格" prop="order_price"></el-table-column>
-        <el-table-column label="是否付款" prop="pay_status">
-          <template slot-scope="scope">
-            <Tag color="success" v-if="scope.row.pay_status === '1'">已付款</Tag>
-            <Tag color="danger" v-else>未付款</Tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="是否发货" prop="is_send">
-          <template slot-scope="scope">
-            <template>
-              {{scope.row.is_send}}
-            </template>
-          </template>
-        </el-table-column>
-        <el-table-column label="下单时间" prop="create_time">
-          <template slot-scope="scope">
-            {{scope.row.create_time | dateFormat}}
-          </template>
-        </el-table-column>
-        <el-table-column label="操作">
+      <Table border :columns="columns12" :data="orderlist">
+        <template slot-scope="scope" slot="pay_status">
+          <Tag color="success" v-if="scope.row.pay_status === '1'">已付款</Tag>
+          <Tag color="info" v-else>未付款</Tag>
+        </template>
+        <template slot-scope="scope" slot="is_send">
           <template>
-            <Icon type="ios-cog" size="30" @click="showBox"/>
-            <Icon type="ios-bus" size="30" @click="showProgressBox"/>
+            {{scope.row.is_send}}
           </template>
-        </el-table-column>
-      </el-table>
-
-      <!-- 分页区域 -->
-      <!-- <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryInfo.pagenum" :page-sizes="[5, 10, 15]" :page-size="queryInfo.pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
-      </el-pagination> -->
+        </template>
+        <template slot-scope="scope" slot="create_time">
+          {{scope.row.create_time | dateFormat}}
+        </template>
+        <template slot-scope="scope" slot="active">
+          <Icon type="ios-cog" size="30" @click="showBox"/>
+          <Icon type="ios-bus" size="30" @click="showProgressBox"/>
+        </template>
+      </Table>
+     
        <Page 
         :total="total" 
         show-sizer 
@@ -60,30 +46,30 @@
     </Card>
 
     <!-- 修改地址的对话框 -->
-    <el-dialog title="修改地址" :visible.sync="addressVisible" width="50%" @close="addressDialogClosed">
-      <el-form :model="addressForm" :rules="addressFormRules" ref="addressFormRef" label-width="100px">
-        <el-form-item label="省市区/县" prop="address1">
+    <Modal title="修改地址" v-model="addressVisible" width="50%" @close="addressDialogClosed">
+      <Form :model="addressForm" :rules="addressFormRules" ref="addressFormRef">
+        <FormItem label="省市区/县" prop="address1">
           <el-cascader :options="cityData" v-model="addressForm.address1"></el-cascader>
-        </el-form-item>
-        <el-form-item label="详细地址" prop="address2">
-          <el-input v-model="addressForm.address2"></el-input>
-        </el-form-item>
-      </el-form>
+        </FormItem>
+        <FormItem label="详细地址" prop="address2">
+          <Input v-model="addressForm.address2"></Input>
+        </FormItem>
+      </Form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="addressVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addressVisible = false">确 定</el-button>
+        <Button @click="addressVisible = false">取 消</Button>
+        <Button type="primary" @click="addressVisible = false">确 定</Button>
       </span>
-    </el-dialog>
+    </Modal>
 
     <!-- 展示物流进度的对话框 -->
-    <el-dialog title="物流进度" :visible.sync="progressVisible" width="50%">
+    <Modal title="物流进度" v-model="progressVisible" width="50%">
       <!-- 时间线 -->
-      <el-timeline>
-        <el-timeline-item v-for="(activity, index) in progressInfo" :key="index" :timestamp="activity.time">
+      <Timeline>
+        <TimelineItem v-for="(activity, index) in progressInfo" :key="index" :timestamp="activity.time">
           {{activity.context}}
-        </el-timeline-item>
-      </el-timeline>
-    </el-dialog>
+        </TimelineItem>
+      </Timeline>
+    </Modal>
   </div>
 </template>
 
@@ -93,6 +79,42 @@ import cityData from './citydata.js'
 export default {
   data() {
     return {
+      //iview渲染表格
+      columns12: [
+        {
+          type:'index',
+          width: 60,
+          align: 'center'
+        },
+        {
+          title: '订单编号',
+          key: 'order_number'
+        },
+        {
+          title: '订单价格',
+          key: 'order_price',
+        },
+        {
+          title: '是否付款',
+          key: 'pay_status',
+          slot:'pay_status'
+        },
+        {
+          title: '是否发货',
+          slot: 'is_send',
+          key: 'is_send'
+        },
+        {
+          title: '下单时间',
+          slot: 'create_time',
+          key: 'create_time'
+        },
+        {
+          title: '操作',
+          slot: 'active',
+          align: 'center'
+        }
+      ],
       queryInfo: {
         query: '',
         pagenum: 1,
