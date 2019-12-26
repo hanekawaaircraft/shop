@@ -29,69 +29,52 @@
       </Row>
 
       <!-- tab 页签区域 -->
-      <el-tabs v-model="activeName" @tab-click="handleTabClick">
+      <Tabs v-model="activeName" @tab-click="handleTabClick">
         <!-- 添加动态参数的面板 -->
-        <el-tab-pane label="动态参数" name="many">
+        <TabPane label="动态参数" name="many">
           <!-- 添加参数的按钮 -->
-          <Button type="primary" size="small" :disabled="isBtnDisabled" @click="addDialogVisible=true">添加参数</Button>
-
+          <Button type="primary" size="small" :disabled="isBtnDisabled" @click="addDialogVisible=true" class="buttonAdd">添加参数</Button>
           <!-- 动态参数表格 -->
-          <el-table :data="manyTableData" border stripe>
-            <!-- 展开行 -->
-            <el-table-column type="expand">
-              <template slot-scope="scope">
-                <!-- 循环渲染Tag标签 -->
-                <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</el-tag>
-                <!-- 输入的文本框 -->
-                <Input class="input-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
-                </Input>
-                <!-- 添加按钮 -->
-                <Button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</Button>
-              </template>
-            </el-table-column>
-            <!-- 索引列 -->
-            <el-table-column type="index"></el-table-column>
-            <el-table-column label="参数名称" prop="attr_name"></el-table-column>
-            <el-table-column label="操作">
-              <template slot-scope="scope">
-                <Button size="small" type="primary" @click="showEditDialog(scope.row.attr_id)">编辑</Button>
-                &nbsp;
-                <Button size="small" @click="removeParams(scope.row.attr_id)">删除</Button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
+          <Table border :columns="columns12" :data="manyTableData">
+            <template slot-scope="scope" slot="attribute">
+              <!-- 循环渲染Tag标签 -->
+              <Tag color="primary" v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</Tag>
+              <!-- 输入的文本框 -->
+              <Input class="input-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
+              </Input>
+              <!-- 添加按钮 -->
+              <Button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</Button>
+            </template>
+            <template slot-scope="scope" slot="active">
+              <Button size="small" type="primary" @click="showEditDialog(scope.row.attr_id)">编辑</Button>
+              &nbsp;
+              <Button size="small" @click="removeParams(scope.row.attr_id)">删除</Button>
+            </template>
+          </Table>  
+        </TabPane>
         <!-- 添加静态属性的面板 -->
-        <el-tab-pane label="静态属性" name="only">
+        <TabPane label="静态属性" name="only">
           <!-- 添加属性的按钮 -->
-          <Button type="primary" size="small" :disabled="isBtnDisabled" @click="addDialogVisible=true">添加属性</Button>
+          <Button type="primary" size="small" :disabled="isBtnDisabled" @click="addDialogVisible=true" class="buttonAdd">添加属性</Button>
           <!-- 静态属性表格 -->
-          <el-table :data="onlyTableData" border stripe>
-            <!-- 展开行 -->
-            <el-table-column type="expand">
-              <template slot-scope="scope">
-                <!-- 循环渲染Tag标签 -->
-                <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</el-tag>
-                <!-- 输入的文本框 -->
-                <Input class="input-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
-                </Input>
-                <!-- 添加按钮 -->
-                <Button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</Button>
-              </template>
-            </el-table-column>
-            <!-- 索引列 -->
-            <el-table-column type="index"></el-table-column>
-            <el-table-column label="属性名称" prop="attr_name"></el-table-column>
-            <el-table-column label="操作">
-              <template slot-scope="scope">
-                <Button size="small" type="primary" @click="showEditDialog(scope.row.attr_id)">编辑</Button>
-                &nbsp;
-                <Button size="small" @click="removeParams(scope.row.attr_id)">删除</Button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
-      </el-tabs>
+          <Table border :columns="columns12" :data="onlyTableData">
+            <template slot-scope="scope" slot="attribute">
+              <!-- 循环渲染Tag标签 -->
+              <Tag color="primary" v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</Tag>
+              <!-- 输入的文本框 -->
+              <Input class="input-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
+              </Input>
+              <!-- 添加按钮 -->
+              <Button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</Button>
+            </template>
+            <template slot-scope="scope" slot="active">
+              <Button size="small" type="primary" @click="showEditDialog(scope.row.attr_id)">编辑</Button>
+              &nbsp;
+              <Button size="small" @click="removeParams(scope.row.attr_id)">删除</Button>
+            </template>
+          </Table>
+        </TabPane>
+      </Tabs>
     </Card>
 
     <!-- 添加参数的对话框 -->
@@ -130,6 +113,30 @@
 export default {
   data() {
     return {
+      //iview渲染动态参数表格
+      columns12: [
+        {
+          type:'index',
+          width: 60,
+          align: 'center'
+        },
+        {
+          title: '参数名称',
+          key: 'attr_name',
+          width:200
+        },
+        {
+          title: '属性',
+          key: 'attribute',
+          slot: 'attribute'
+        },
+        {
+          title: '操作',
+          slot: 'active',
+          align: 'center',
+          width:150
+        }
+      ],
       // 商品分类列表
       catelist: [],
       // 级联选择框的配置对象
@@ -403,12 +410,14 @@ export default {
 .cat_opt {
   margin: 15px 0;
 }
-
-.el-tag {
-  margin: 10px;
+.buttonAdd{
+  margin-bottom: 15px;
 }
 
-.input-new-tag {
-  width: 120px;
+.ivu-tag  {
+  margin: 5px;
+}
+.button-new-tag {
+  margin: 5px
 }
 </style>
