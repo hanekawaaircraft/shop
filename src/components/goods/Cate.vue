@@ -56,7 +56,7 @@ export default {
       querInfo: {
         type: 3,
         pagenum: 1,
-        pagesize: 5
+        pagesize: 10
       },
       // 商品分类的数据列表，默认为空
       catelist: [],
@@ -95,20 +95,6 @@ export default {
         // 分类的等级，默认要添加的是1级分类
         cat_level: 0
       },
-      // 添加分类表单的验证规则对象
-      addCateFormRules: {
-        cat_name: [{ required: true, message: '请输入分类名称', trigger: 'blur' }]
-      },
-      // 大类的列表
-      parentCateList: [],
-      // 指定级联选择器的配置对象
-      cascaderProps: {
-        value: 'cat_id',
-        label: 'cat_name',
-        children: 'children'
-      },
-      // 选中的大类的Id数组
-      selectedKeys: []
     }
   },
   created() {

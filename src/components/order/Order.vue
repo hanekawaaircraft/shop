@@ -93,16 +93,19 @@ export default {
         {
           title: '订单价格',
           key: 'order_price',
+          width: 130,
         },
         {
           title: '是否付款',
           key: 'pay_status',
-          slot:'pay_status'
+          slot:'pay_status',
+          width: 130,
         },
         {
           title: '是否发货',
           slot: 'is_send',
-          key: 'is_send'
+          key: 'is_send',
+          width: 130,
         },
         {
           title: '下单时间',
@@ -112,7 +115,8 @@ export default {
         {
           title: '操作',
           slot: 'active',
-          align: 'center'
+          align: 'center',
+          width: 130,
         }
       ],
       queryInfo: {

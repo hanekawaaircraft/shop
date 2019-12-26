@@ -2,9 +2,15 @@
   <div>
     <!-- 面包屑导航区域 -->
     <Breadcrumb>
-        <BreadcrumbItem :to="{ path: '/home' }">
-          <Icon type="ios-home-outline"></Icon> 首页
-        </BreadcrumbItem>
+      <BreadcrumbItem :to="{ path: '/home' }">
+        <Icon type="ios-home-outline"></Icon> 首页
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <Icon type="logo-buffer"></Icon> 数据统计
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <Icon type="ios-cafe"></Icon> 数据报表
+      </BreadcrumbItem>
     </Breadcrumb>
 
     <!-- 卡片视图区域 -->
