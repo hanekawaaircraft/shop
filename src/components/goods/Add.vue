@@ -53,9 +53,9 @@
             <!-- 渲染表单的Item项 -->
             <FormItem :label="item.attr_name" v-for="item in manyTableData" :key="item.attr_id">
               <!-- 复选框组 -->
-              <el-checkbox-group v-model="item.attr_vals">
-                <el-checkbox :label="cb" v-for="(cb, i) in item.attr_vals" :key="i" border></el-checkbox>
-              </el-checkbox-group>
+              <CheckboxGroup v-model="item.attr_vals">
+                <Checkbox :label="cb" v-for="(cb, i) in item.attr_vals" :key="i" border></Checkbox>
+              </CheckboxGroup>
             </FormItem>
           </TabPane>
           <TabPane label="商品属性" name="2">
