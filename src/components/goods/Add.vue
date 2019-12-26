@@ -30,8 +30,8 @@
       <!-- tab栏区域 -->
 
       <Form :model="addForm" :rules="addFormRules" ref="addFormRef"  label-position="top">
-        <el-tabs v-model="activeIndex" :tab-position="'left'" :before-leave="beforeTabLeave" @tab-click="tabClicked">
-          <el-tab-pane label="基本信息" name="0">
+        <Tabs v-model="activeIndex" :tab-position="'left'" :before-leave="beforeTabLeave" @tab-click="tabClicked">
+          <TabPane label="基本信息" name="0">
             <FormItem label="商品名称" prop="goods_name">
               <Input v-model="addForm.goods_name"></Input>
             </FormItem>
@@ -48,8 +48,8 @@
               <el-cascader expand-trigger="hover" :options="catelist" :props="cateProps" v-model="addForm.goods_cat" @change="handleChange">
               </el-cascader>
             </FormItem>
-          </el-tab-pane>
-          <el-tab-pane label="商品参数" name="1">
+          </TabPane>
+          <TabPane label="商品参数" name="1">
             <!-- 渲染表单的Item项 -->
             <FormItem :label="item.attr_name" v-for="item in manyTableData" :key="item.attr_id">
               <!-- 复选框组 -->
@@ -57,25 +57,25 @@
                 <el-checkbox :label="cb" v-for="(cb, i) in item.attr_vals" :key="i" border></el-checkbox>
               </el-checkbox-group>
             </FormItem>
-          </el-tab-pane>
-          <el-tab-pane label="商品属性" name="2">
+          </TabPane>
+          <TabPane label="商品属性" name="2">
             <FormItem :label="item.attr_name" v-for="item in onlyTableData" :key="item.attr_id">
               <Input v-model="item.attr_vals"></Input>
             </FormItem>
-          </el-tab-pane>
-          <el-tab-pane label="商品图片" name="3">
+          </TabPane>
+          <TabPane label="商品图片" name="3">
             <!-- action 表示图片要上传到的后台API地址 -->
             <Upload :action="uploadURL" :on-preview="handlePreview" :on-remove="handleRemove" list-type="picture" :headers="headerObj" :on-success="handleSuccess">
-              <el-button size="small" type="primary">点击上传</el-button>
+              <Button size="small" type="primary">点击上传</Button>
             </Upload>
-          </el-tab-pane>
-          <el-tab-pane label="商品内容" name="4">
+          </TabPane>
+          <TabPane label="商品内容" name="4">
             <!-- 富文本编辑器组件 -->
             <quill-editor v-model="addForm.goods_introduce"></quill-editor>
             <!-- 添加商品的按钮 -->
             <Button type="primary" class="btnAdd" @click="add">添加商品</Button>
-          </el-tab-pane>
-        </el-tabs>
+          </TabPane>
+        </Tabs>
       </Form>
 
     </Card>
@@ -122,7 +122,7 @@ export default {
           { required: true, message: '请输入商品数量', trigger: 'blur' }
         ],
         goods_cat: [
-          { required: true, message: '请选择商品分类', trigger: 'blur' }
+          { message: '请选择商品分类', trigger: 'blur' }
         ]
       },
       // 商品分类列表
@@ -169,16 +169,12 @@ export default {
       }
     },
     beforeTabLeave(activeName, oldActiveName) {
-      // console.log('即将离开的标签页名字是：' + oldActiveName)
-      // console.log('即将进入的标签页名字是：' + activeName)
-      // return false
       if (oldActiveName === '0' && this.addForm.goods_cat.length !== 3) {
         this.$message.error('请先选择商品分类！')
         return false
       }
     },
     async tabClicked() {
-      // console.log(this.activeIndex)
       // 证明访问的是动态参数面板
       if (this.activeIndex === '1') {
         const { data: res } = await this.$http.get(
