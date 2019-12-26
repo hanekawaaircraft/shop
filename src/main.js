@@ -2,15 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 
-// 导入字体图标
-import './assets/fonts/iconfont.css'
 // 导入全局样式表
 import './assets/css/global.css'
+//导入打开很卡的树形结构图
 import TreeTable from 'vue-table-with-tree-grid'
 
-// 导入富文本编辑器
+// 导入富文本编辑器 以及 对应的样式
 import VueQuillEditor from 'vue-quill-editor'
-// require styles 导入富文本编辑器对应的样式
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
