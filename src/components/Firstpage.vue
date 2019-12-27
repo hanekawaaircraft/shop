@@ -1,11 +1,12 @@
 <template>
   <div>
-    <Breadcrumb>
+    <!-- <Breadcrumb>
       <BreadcrumbItem :to="{ path: '/home' }">
         <Icon type="ios-home-outline"></Icon> 首页
       </BreadcrumbItem>
-    </Breadcrumb>
-    <h1>首页</h1><p>欢迎使用</p>
+    </Breadcrumb> -->
+    <h1>首页</h1>
+    <p>{{}},欢迎使用</p>
      <div class="pie">
         <div id="pie1">
           <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
@@ -17,12 +18,15 @@
 
 <script>
 import echarts from 'echarts'
-
 export default {
+  data(){
+  return{
+  }
+ },
   created(){
   },
   mounted(){
-    this.initData();
+    this.initData()
   },
   methods:{
     //初始化数据
