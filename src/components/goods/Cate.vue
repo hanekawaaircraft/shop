@@ -138,7 +138,4 @@ export default {
 .ivu-layout-sider{
   min-width:240px !important;
 }
-.ivu-page{
-  margin-top: 15px;
-}
 </style>

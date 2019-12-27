@@ -174,7 +174,4 @@ export default {
 .ivu-row{
   margin: 0 0 10px 0
 }
-.ivu-page{
-  margin-top: 20px;
-}
 </style>

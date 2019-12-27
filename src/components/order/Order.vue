@@ -2,15 +2,15 @@
   <div>
     <!-- 面包屑导航区域 -->
     <Breadcrumb>
-        <BreadcrumbItem :to="{ path: '/home' }">
-          <Icon type="ios-home-outline"></Icon> 首页
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <Icon type="logo-buffer"></Icon> 订单管理
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <Icon type="ios-cafe"></Icon> 订单列表
-        </BreadcrumbItem>
+      <BreadcrumbItem :to="{ path: '/home' }">
+        <Icon type="ios-home-outline"></Icon> 首页
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <Icon type="logo-buffer"></Icon> 订单管理
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <Icon type="ios-cafe"></Icon> 订单列表
+      </BreadcrumbItem>
     </Breadcrumb>
 
 
@@ -195,8 +195,5 @@ export default {
 <style lang="less" scoped>
 .el-cascader {
   width: 100%;
-}
-.ivu-page{
-  margin-top: 15px;
 }
 </style>

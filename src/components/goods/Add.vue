@@ -286,10 +286,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// .el-checkbox {
-//   margin: 0 10px 0 0 !important;
-// }
-
 .previewImg {
   width: 100%;
 }

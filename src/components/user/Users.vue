@@ -415,7 +415,5 @@ export default {
 }
 </script>
 <style scpoed>
-  .ivu-page{
-    margin-top: 20px;
-  }
+ 
 </style>
