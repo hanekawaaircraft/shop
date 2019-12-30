@@ -4,7 +4,7 @@
       <div>
         <span>电商后台管理系统</span>
       </div>
-      <Button type="info" @click="logout">退出</Button>
+      <Button type="info" @click="logout">{{username}},退出登录</Button>
     </Header>
 
     <Layout>    
@@ -36,6 +36,7 @@
 export default {
   data() {
     return {
+      username:"",
       theme1:"dark",
       // 左侧菜单数据
       menulist: [
@@ -136,8 +137,13 @@ export default {
   },
   created() {
     this.activePath = window.sessionStorage.getItem('activePath')
+    this.getUsername()
   },
   methods: {
+    getUsername(){
+      var that=this
+      that.username=sessionStorage.getItem('user');
+    },
     logout() {
       window.sessionStorage.clear()
       this.$router.push('/login')

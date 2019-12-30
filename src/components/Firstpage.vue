@@ -1,34 +1,32 @@
 <template>
   <div>
-    <!-- <Breadcrumb>
-      <BreadcrumbItem :to="{ path: '/home' }">
-        <Icon type="ios-home-outline"></Icon> 首页
-      </BreadcrumbItem>
-    </Breadcrumb> -->
     <h1>首页</h1>
-    <p>{{}},欢迎使用</p>
-     <div class="pie">
-        <div id="pie1">
-          <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-          <div id="main1" style="float:left;width:750px;height: 300px"></div>
-        </div>
+    <p>{{username}},欢迎使用</p>
+    <div class="pie">
+      <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+      <div id="main1" style="float:left;width:750px;height: 300px"></div>
     </div>
   </div>
 </template>
-
 <script>
 import echarts from 'echarts'
 export default {
   data(){
-  return{
-  }
- },
+    return{
+      username:""
+    }
+  },
   created(){
+    this.getUsername()
   },
   mounted(){
-    this.initData()
+    this.initData();
   },
   methods:{
+    getUsername(){
+      var that=this
+      that.username=sessionStorage.getItem('user');
+    },
     //初始化数据
     initData() {
       // 基于准备好的dom，初始化echarts实例

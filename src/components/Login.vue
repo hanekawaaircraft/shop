@@ -5,7 +5,7 @@
       <div class="avatar_box">
         <img src="../assets/login.png" alt="">
       </div>
-      <Form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login_form">
+      <Form ref="loginFormRef" :model="loginForm":rules="loginRules" class="login_form">
         <FormItem prop="user">
           <Input type="text" v-model="loginForm.username" placeholder="Username">
             <Icon type="ios-person-outline" slot="prepend"></Icon>
@@ -18,6 +18,7 @@
         </FormItem>
         <FormItem class="btns">
           <Button type="primary" @click="login">登录</Button>
+          <!-- <Button @click="handleReset('loginFormRef')">重置</Button> -->
         </FormItem>
       </Form>
     </div>
@@ -60,12 +61,18 @@ export default {
         // 1. 将登录成功之后的 token，保存到客户端的 sessionStorage 中
         //   1.1 项目中出了登录之外的其他API接口，必须在登录之后才能访问
         //   1.2 token 只应在当前网站打开期间生效，所以将 token 保存在 sessionStorage 中
-        window.sessionStorage.setItem('token', res.data.token)
         let user=res.data.username
-        console.log(user)
+        // console.log(user)
+        window.sessionStorage.setItem('token', res.data.token)
+        window.sessionStorage.setItem('user',res.data.username)
         this.$router.push('/home')
       })
-    }
+    },
+    // handleReset (loginFormRef) {
+    //   console.log('提交后清空')
+    //   console.log(this.loginFormRef)
+    //   this.$refs.formFilter.resetFields()
+    // }
   }
 }
 </script>
