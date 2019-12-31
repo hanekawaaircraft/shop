@@ -38,7 +38,7 @@
           <Table border :columns="columns" :data="manyTableData">
             <template slot-scope="scope" slot="attribute">
               <!-- 循环渲染Tag标签 -->
-              <Tag color="primary" v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</Tag>
+              <Tag color="primary" v-for="(item, i) in scope.row.attr_vals" :key="i" closable @on-close="handleClose(i, scope.row)">{{item}}</Tag>
               <!-- 输入的文本框 -->
               <Input class="input-new-tag" v-if="scope.row.inputShow" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
               </Input>
@@ -60,7 +60,7 @@
           <Table border :columns="columns" :data="onlyTableData">
             <template slot-scope="scope" slot="attribute">
               <!-- 循环渲染Tag标签 -->
-              <Tag color="primary" v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="handleClose(i, scope.row)">{{item}}</Tag>
+              <Tag color="primary" v-for="(item, i) in scope.row.attr_vals" :key="i" closable @on-close="handleClose(i, scope.row)">{{item}}</Tag>
               <!-- 输入的文本框 -->
               <Input class="input-new-tag" v-if="scope.row.inputShow" v-model="scope.row.inputValue" ref="saveTagInput" size="small" @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
               </Input>
