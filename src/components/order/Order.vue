@@ -31,8 +31,12 @@
           {{scope.row.create_time | dateFormat}}
         </template>
         <template slot-scope="scope" slot="active">
-          <Icon type="ios-cog" size="30" @click="showBox"/>
-          <Icon type="ios-bus" size="30" @click="showProgressBox"/>
+          <Tooltip effect="dark" content="修改地址" placement="top" :enterable="false">
+            <Icon type="ios-cog" size="30" @click="showBox"/>
+          </Tooltip>
+          <Tooltip effect="dark" content="订单查询" placement="top" :enterable="false">
+            <Icon type="ios-bus" size="30" @click="showProgressBox"/>
+          </Tooltip>
         </template>
       </Table>
      
@@ -56,7 +60,6 @@
         </FormItem>
       </Form>
       <span slot="footer" class="dialog-footer">
-        <Button @click="addressShow = false">取 消</Button>
         <Button type="primary" @click="addressShow = false">确 定</Button>
       </span>
     </Modal>
@@ -153,7 +156,7 @@ export default {
     this.getOrderList()
   },
   methods: {
-    async getOrderList() {
+    getOrderList() {
       this.$Loading.start();
       this.$http.get('orders',{
         params: this.queryInfo

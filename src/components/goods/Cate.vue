@@ -29,11 +29,11 @@
           <Tag color="warning" v-else>三级</Tag>
         </template>
         <!-- 操作 -->
-        <template slot="active">
-          <Button color="primary">编辑</Button>
+        <!-- <template slot="active">
+          <Button type="primary">编辑</Button>
           &nbsp;
-          <Button color="danger">删除</Button>
-        </template>
+          <Button>删除</Button>
+        </template> -->
       </tree-table>
 
       <!-- 分页区域 -->
@@ -78,12 +78,12 @@ export default {
           type: 'template',
           template: 'order'
         },
-        {
-          label: '操作',
-          type: 'template',
-          template: 'active',
-          width:200
-        }
+        // {
+        //   label: '操作',
+        //   type: 'template',
+        //   template: 'active',
+        //   width:200
+        // }
       ],
       // 添加分类
       addCateShow: false,
