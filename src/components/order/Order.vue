@@ -154,18 +154,24 @@ export default {
   },
   methods: {
     async getOrderList() {
-      const { data: res } = await this.$http.get('orders', {
+      this.$Loading.start();
+      this.$http.get('orders',{
         params: this.queryInfo
+      }).then(res=>{
+        let body=res.data
+        if (body.meta.status == 200) {
+          console.log(res)
+          this.total = body.data.total
+          this.orderlist = body.data.goods
+          this.$Loading.finish();
+        }
+        else{
+          this.$message.error('获取订单列表失败！')
+          this.$Loading.error();
+        }
       })
-
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取订单列表失败！')
-      }
-
-      console.log(res)
-      this.total = res.data.total
-      this.orderlist = res.data.goods
     },
+
     PageSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
       this.getOrderList()

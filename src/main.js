@@ -46,6 +46,8 @@ Vue.use(ElementUI);
 
 Vue.use(ViewUI);
 
+Vue.use(axios);
+
 Vue.filter('dateFormat', function(originVal) {
   const dt = new Date(originVal)
 

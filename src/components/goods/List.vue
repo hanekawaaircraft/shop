@@ -124,8 +124,6 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error('获取商品列表失败！')
       }
-
-      this.$message.success('获取商品列表成功！')
       console.log(res.data)
       this.goodslist = res.data.goods
       this.total = res.data.total
@@ -141,7 +139,7 @@ export default {
     },
     async removeById(id) {
       const MsgResult = await this.$confirm(
-        '此操作将永久删除该商品, 是否继续?',
+        '此操作将删除该商品, 是否继续?',
         '提示',
         {
           confirmButtonText: '确定',
@@ -151,7 +149,7 @@ export default {
       ).catch(err => err)
 
       if (MsgResult !== 'confirm') {
-        return this.$message.info('已经取消删除！')
+        return this.$message.info('取消删除！')
       }
 
       const { data: res } = await this.$http.delete(`goods/${id}`)

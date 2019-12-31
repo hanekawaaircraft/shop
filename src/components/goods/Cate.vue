@@ -19,8 +19,8 @@
       <tree-table class="treeTable" :data="catelist" :columns="columns" :selection-type="false" :expand-type="false" show-index index-text="#" border :show-row-hover="false">
         <!-- 是否有效 -->
         <template slot="isok" slot-scope="scope">
-          <i v-if="scope.row.cat_deleted === false"><Icon type="ios-checkmark-circle-outline" color="primary"/></i>
-          <i v-else><Icon type="ios-alert-outline" color="danger"/></i>
+          <i v-if="scope.row.cat_deleted === false"><Icon type="ios-checkmark-circle-outline" color="blue" size="20"/></i>
+          <i v-else><Icon type="ios-alert-outline" color="danger" size="20"/></i>
         </template>
         <!-- 排序 -->
         <template slot="order" slot-scope="scope">
@@ -104,19 +104,24 @@ export default {
   methods: {
     // 获取商品分类数据
     async getCateList() {
-      const { data: res } = await this.$http.get('categories', {
+      this.$Loading.start();
+      this.$http.get('categories',{
         params: this.querInfo
+      }).then(res=>{
+        let body=res.data
+        if (body.meta.status == 200) {
+          console.log(body)
+          // 把数据列表，赋值给 catelist
+          this.catelist = body.data.result
+          // 为总数据条数赋值
+          this.total = body.data.total
+          this.$Loading.finish();
+        }
+        else{
+          return this.$message.error('获取商品分类失败！')
+          this.$Loading.error();
+        }
       })
-
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取商品分类失败！')
-      }
-
-      console.log(res.data)
-      // 把数据列表，赋值给 catelist
-      this.catelist = res.data.result
-      // 为总数据条数赋值
-      this.total = res.data.total
     },
     //pagesize 
     PageSizeChange(newSize) {
