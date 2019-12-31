@@ -142,7 +142,7 @@ export default {
   methods: {
     getUsername(){
       var that=this
-      that.username=sessionStorage.getItem('user');
+      that.username = sessionStorage.getItem('user');
     },
     logout() {
       window.sessionStorage.clear()
@@ -153,48 +153,48 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.home-container {
-  height: 100%;
-}
-.ivu-layout-header {
-  background-color: #373d41;
-  display: flex;
-  justify-content: space-between;
-  padding-left: 0;
-  align-items: center;
-  color: #fff;
-  font-size: 20px;
-  > div {
+  .home-container {
+    height: 100%;
+  }
+  .ivu-layout-header {
+    background-color: #373d41;
     display: flex;
+    justify-content: space-between;
+    padding-left: 0;
     align-items: center;
-    span {
-      margin-left: 15px;
+    color: #fff;
+    font-size: 20px;
+    > div {
+      display: flex;
+      align-items: center;
+      span {
+        margin-left: 15px;
+      }
     }
   }
-}
 
-.ivu-layout-sider {
-  background-color: #333744;
-  min-width:240px !important;
-}
+  .ivu-layout-sider {
+    background-color: #333744;
+    min-width:240px !important;
+  }
 
-.ivu-layout-content {
-  background-color: #eaedf1;
-}
+  .ivu-layout-content {
+    background-color: #dbe0e6;
+  }
 
-.iconfont {
-  margin-right: 10px;
-}
-.activeColor{
-  color: #fff;
-}
-.toggle-button {
-  background-color: #4a5064;
-  font-size: 10px;
-  line-height: 24px;
-  color: #fff;
-  text-align: center;
-  letter-spacing: 0.2em;
-  cursor: pointer;
-}
+  .iconfont {
+    margin-right: 10px;
+  }
+  .activeColor{
+    color: #fff;
+  }
+  .toggle-button {
+    background-color: #4a5064;
+    font-size: 10px;
+    line-height: 24px;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+  }
 </style>

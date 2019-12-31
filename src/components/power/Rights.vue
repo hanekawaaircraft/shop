@@ -34,23 +34,23 @@ export default {
       rightsList: [],
       columns: [
         {
-            type:'index',
-            width: 60,
-            align: 'center'
+          type:'index',
+          width: 60,
+          align: 'center'
         },
         {
-            title: '权限名称',
-            key: 'authName'
+          title: '权限名称',
+          key: 'authName'
         },
         {
-            title: '路径',
-            key: 'path'
+          title: '路径',
+          key: 'path'
         },
         {
-            title: '权限等级',
-            sortable: true,
-            slot: 'level',
-            key: 'level'
+          title: '权限等级',
+          sortable: true,
+          slot: 'level',
+          key: 'level'
         }
       ],
     }

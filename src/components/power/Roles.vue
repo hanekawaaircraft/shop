@@ -24,10 +24,10 @@
 
       <Table border :columns="columns" :data="rolelist">
         <template slot-scope="scope" slot="active">
-          <!-- <Button type="primary">编辑</Button> -->
-          &nbsp;
-          <!-- <Button type="info">删除</Button> -->
-          &nbsp;
+          <!-- <Button type="primary">编辑</Button> &nbsp;-->
+         
+          <!-- <Button type="info">删除</Button>  &nbsp; -->
+        
           <Button type="success" @click="showSetRightModal(scope.row)">分配权限</Button>
         </template>
       </Table>
@@ -70,6 +70,7 @@ export default {
           title: '操作',
           key: 'active',
           slot:'active',
+          align: 'center',
           width:350
         }
        ],

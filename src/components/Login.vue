@@ -7,16 +7,17 @@
       </div>
       <Form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login_form">
         <FormItem prop="user">
-          <Input type="text" v-model="loginForm.username" placeholder="Username">
+          <Input type="text" v-model="loginForm.username" placeholder="用户名">
             <Icon type="ios-person-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
         <FormItem prop="password">
-          <Input v-model="loginForm.password" type="password">
+          <Input v-model="loginForm.password" type="password" placeholder="密码">
             <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
-        <FormItem class="btns">
+        <FormItem class="btns"> 
+          <!-- <Checkbox v-model="checked">记住密码</Checkbox> -->
           <Button type="primary" @click="login">登录</Button>
           <!-- <Button @click="handleReset('loginFormRef')">重置</Button> -->
         </FormItem>
@@ -30,6 +31,8 @@
 export default {
   data() {
     return {
+      //记住密码默认状态
+      // checked: false,
       // 这是登录表单的数据绑定对象
       loginForm: {
         username: 'admin',
@@ -51,6 +54,7 @@ export default {
     }
   },
   methods: {
+    //登录验证
     login() {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return

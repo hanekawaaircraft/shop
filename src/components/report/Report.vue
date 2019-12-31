@@ -73,6 +73,7 @@ export default {
     }
 
     // 准备数据和配置项
+    //merge 函数是将源对象的自身可枚举属性递归地合到目标对象中
     const result = _.merge(res.data, this.options)
 
     // 展示数据

@@ -19,8 +19,8 @@
       <tree-table class="treeTable" :data="catelist" :columns="columns" :selection-type="false" :expand-type="false" show-index index-text="#" border :show-row-hover="false">
         <!-- 是否有效 -->
         <template slot="isok" slot-scope="scope">
-          <i v-if="scope.row.cat_deleted === false" style="color: lightgreen;"></i>
-          <i v-else style="color: red;"></i>
+          <i v-if="scope.row.cat_deleted === false"><Icon type="ios-checkmark-circle-outline" color="primary"/></i>
+          <i v-else><Icon type="ios-alert-outline" color="danger"/></i>
         </template>
         <!-- 排序 -->
         <template slot="order" slot-scope="scope">
@@ -29,7 +29,7 @@
           <Tag color="warning" v-else>三级</Tag>
         </template>
         <!-- 操作 -->
-        <template slot="opt">
+        <template slot="active">
           <Button color="primary">编辑</Button>
           &nbsp;
           <Button color="danger">删除</Button>
@@ -81,7 +81,8 @@ export default {
         {
           label: '操作',
           type: 'template',
-          template: 'opt'
+          template: 'active',
+          width:200
         }
       ],
       // 控制添加分类对话框的显示与隐藏
@@ -138,4 +139,7 @@ export default {
 .ivu-layout-sider{
   min-width:240px !important;
 }
+.zk-table__body-wrapper{ 
+  overflow: hidden !important;
+  }
 </style>

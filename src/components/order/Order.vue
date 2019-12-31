@@ -88,17 +88,20 @@ export default {
         },
         {
           title: '订单编号',
-          key: 'order_number'
+          key: 'order_number',
+          align: 'center'
         },
         {
           title: '订单价格',
           key: 'order_price',
           width: 130,
+          align: 'center'
         },
         {
           title: '是否付款',
           key: 'pay_status',
           slot:'pay_status',
+          align: 'center',
           width: 130,
         },
         {
@@ -106,11 +109,13 @@ export default {
           slot: 'is_send',
           key: 'is_send',
           width: 130,
+          align: 'center'
         },
         {
           title: '下单时间',
           slot: 'create_time',
-          key: 'create_time'
+          key: 'create_time',
+          align: 'center'
         },
         {
           title: '操作',
