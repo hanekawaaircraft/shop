@@ -18,15 +18,15 @@
       <!-- 添加角色按钮区域 -->
       <Row>
         <Col>
-          <Button color="primary">添加角色</Button>
+          <!-- <Button color="primary">添加角色</Button> -->
         </Col>
       </Row>
 
       <Table border :columns="columns" :data="rolelist">
         <template slot-scope="scope" slot="active">
-          <Button type="primary">编辑</Button>
+          <!-- <Button type="primary">编辑</Button> -->
           &nbsp;
-          <Button type="info">删除</Button>
+          <!-- <Button type="info">删除</Button> -->
           &nbsp;
           <Button type="success" @click="showSetRightModal(scope.row)">分配权限</Button>
         </template>
@@ -109,7 +109,7 @@ export default {
     // 根据Id删除对应的权限
     async removeRightById(role, rightId) {
       // 弹框提示用户是否要删除
-      const confirmResult = await this.$confirm(
+      const MsgResult = await this.$confirm(
         '此操作将永久删除该文件, 是否继续?',
         '提示',
         {
@@ -119,7 +119,7 @@ export default {
         }
       ).catch(err => err)
 
-      if (confirmResult !== 'confirm') {
+      if (MsgResult !== 'confirm') {
         return this.$message.info('取消了删除！')
       }
 
@@ -168,7 +168,8 @@ export default {
     },
     // 点击为角色分配权限
     async allotRights() {
-      const keys = [
+      const keys = [  
+        //element ui官方API 返回目前半选中的节点所组成的数组 以及 目前半选中的节点的 key 所组成的数组
         ...this.$refs.treeRef.getCheckedKeys(),
         ...this.$refs.treeRef.getHalfCheckedKeys()
       ]
@@ -193,9 +194,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.ivu-col{
-  margin-bottom: 10px;
-}
-
-
+  .ivu-col{
+    margin-bottom: 10px;
+  }
 </style>

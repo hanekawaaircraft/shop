@@ -23,8 +23,8 @@
         <Col>
           <span>选择商品分类：</span>
           <!-- 选择商品分类的级联选择框 -->
-          <el-cascader expand-trigger="hover" :options="catelist" :props="cateProps" v-model="selectedCateKeys" @change="handleChange">
-          </el-cascader>
+          <el-cascader expand-trigger="hover" :options="catelist" :props="cateProps" v-model="selectedCateKeys" @change="handleChange"></el-cascader>
+          <!-- <Cascader trigger="hover" :data="catelist" v-model="selectedCateKeys" render-format="cateProps"></Cascader> -->
         </Col>
       </Row>
 
@@ -306,8 +306,8 @@ export default {
     },
     // 根据Id删除对应的参数项
     async removeParams(attrId) {
-      const confirmResult = await this.$confirm(
-        '此操作将永久删除该参数, 是否继续?',
+      const MsgResult = await this.$confirm(
+        '此操作将删除这个参数, 是否继续?',
         '提示',
         {
           confirmButtonText: '确定',
@@ -317,7 +317,7 @@ export default {
       ).catch(err => err)
 
       // 用户取消了删除的操作
-      if (confirmResult !== 'confirm') {
+      if (MsgResult !== 'confirm') {
         return this.$message.info('已取消删除！')
       }
 

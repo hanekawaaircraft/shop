@@ -45,7 +45,7 @@ export default {
         legend: {
           orient: 'vertical',
           bottom: 'bottom',
-          data: ['直接访问','邮件营销','视频广告','联盟广告']
+          data: ['直接访问','邮件营销','视频广告','feed流']
         },
         series : [
           {
@@ -56,7 +56,7 @@ export default {
             data:[
               {value:335, name:'直接访问'},
               {value:310, name:'邮件营销'},
-              {value:234, name:'联盟广告'},
+              {value:234, name:'feed流'},
               {value:135, name:'视频广告'}
             ],
             itemStyle: {

@@ -10,3 +10,9 @@ body,
 .ivu-page{
   margin-top:15px;
 }
+.ivu-breadcrumb{
+  margin-bottom: 5px;
+}
+.ivu-row{
+  margin: 0 0 10px 0
+}

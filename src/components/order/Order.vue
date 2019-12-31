@@ -49,7 +49,7 @@
     <Modal title="修改地址" v-model="addressVisible" width="50%" @close="addressDialogClosed">
       <Form :model="addressForm" :rules="addressFormRules" ref="addressFormRef">
         <FormItem label="省市区/县" prop="address1">
-          <el-cascader :options="cityData" v-model="addressForm.address1"></el-cascader>
+          <Cascader :data="cityData" v-model="addressForm.address1"></Cascader>
         </FormItem>
         <FormItem label="详细地址" prop="address2">
           <Input v-model="addressForm.address2"></Input>
@@ -193,7 +193,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.el-cascader {
-  width: 100%;
-}
+
 </style>

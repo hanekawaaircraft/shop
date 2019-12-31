@@ -345,7 +345,7 @@ export default {
     // 根据Id删除对应的用户信息
     async removeUserById(id) {
       // 弹框询问用户是否删除数据
-      const confirmResult = await this.$confirm(
+      const MsgResult = await this.$confirm(
         '此操作将永久删除该用户, 是否继续?',
         '提示',
         {
@@ -357,8 +357,8 @@ export default {
 
       // 如果用户确认删除，则返回值为字符串 confirm
       // 如果用户取消了删除，则返回值为字符串 cancel
-      // console.log(confirmResult)
-      if (confirmResult !== 'confirm') {
+      // console.log(MsgResult)
+      if (MsgResult !== 'confirm') {
         return this.$message.info('已取消删除')
       }
 

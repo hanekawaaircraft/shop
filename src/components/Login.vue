@@ -5,7 +5,7 @@
       <div class="avatar_box">
         <img src="../assets/login.png" alt="">
       </div>
-      <Form ref="loginFormRef" :model="loginForm":rules="loginRules" class="login_form">
+      <Form ref="loginFormRef" :model="loginForm" :rules="loginRules" class="login_form">
         <FormItem prop="user">
           <Input type="text" v-model="loginForm.username" placeholder="Username">
             <Icon type="ios-person-outline" slot="prepend"></Icon>

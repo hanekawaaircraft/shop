@@ -140,7 +140,7 @@ export default {
       this.getGoodsList()
     },
     async removeById(id) {
-      const confirmResult = await this.$confirm(
+      const MsgResult = await this.$confirm(
         '此操作将永久删除该商品, 是否继续?',
         '提示',
         {
@@ -150,7 +150,7 @@ export default {
         }
       ).catch(err => err)
 
-      if (confirmResult !== 'confirm') {
+      if (MsgResult !== 'confirm') {
         return this.$message.info('已经取消删除！')
       }
 
@@ -171,7 +171,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.ivu-row{
-  margin: 0 0 10px 0
-}
+
 </style>
