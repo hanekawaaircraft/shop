@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     // 获取权限列表
-    async getRightsList() {
+    getRightsList() {
       this.$Loading.start();
       this.$http.get('rights/list')
         .then(res=>{

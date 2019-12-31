@@ -58,11 +58,11 @@ export default {
         pagenum: 1,
         pagesize: 10
       },
-      // 商品分类的数据列表，默认为空
+      // 商品分类
       catelist: [],
-      // 总数据条数
+      // 总数据
       total: 0,
-      // 为table指定列的定义
+      //iview渲染表格项
       columns: [
         {
           label: '分类名称',
@@ -85,7 +85,7 @@ export default {
           width:200
         }
       ],
-      // 控制添加分类对话框的显示与隐藏
+      // 添加分类
       addCateShow: false,
       // 添加分类的表单数据对象
       addCateForm: {
@@ -98,12 +98,12 @@ export default {
       },
     }
   },
-  created() {
+  mounted() {
     this.getCateList()
   },
   methods: {
     // 获取商品分类数据
-    async getCateList() {
+    getCateList() {
       this.$Loading.start();
       this.$http.get('categories',{
         params: this.querInfo
@@ -111,9 +111,7 @@ export default {
         let body=res.data
         if (body.meta.status == 200) {
           console.log(body)
-          // 把数据列表，赋值给 catelist
           this.catelist = body.data.result
-          // 为总数据条数赋值
           this.total = body.data.total
           this.$Loading.finish();
         }

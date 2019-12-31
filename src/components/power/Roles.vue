@@ -92,16 +92,15 @@ export default {
   },
   methods: {
     // 获取所有角色的列表
-    async getRolesList() {
-      const { data: res } = await this.$http.get('roles')
-
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取角色列表失败！')
-      }
-
-      this.rolelist = res.data
-
-      console.log(this.rolelist)
+    getRolesList() {
+      this.$http.get('roles').then(res=>{
+        let body=res.data
+        if (body.meta.status == 200) {
+          this.rolelist = res.data.data
+        }else{
+          return this.$message.error('获取角色列表失败！')
+        }
+      })
     },
     // 根据Id删除对应的权限
     async removeRightById(role, rightId) {

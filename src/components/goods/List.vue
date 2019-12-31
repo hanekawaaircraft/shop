@@ -117,17 +117,20 @@ export default {
   },
   methods: {
     // 根据分页获取对应的商品列表
-    async getGoodsList() {
-      const { data: res } = await this.$http.get('goods', {
-        params: this.queryInfo
+    getGoodsList() {
+      this.$http.get('goods',{
+        params:this.queryInfo
+      }).then(res=>{
+        let body=res.data
+        if(body.meta.status==200){
+          console.log(res.data)
+          this.goodslist = body.data.goods
+          this.total = body.data.total
+          this.goodid=body.data.goods_id
+        }else{
+          this.$message.error('获取商品列表失败')
+        }
       })
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取商品列表失败！')
-      }
-      console.log(res.data)
-      this.goodslist = res.data.goods
-      this.total = res.data.total
-      this.goodid=res.data.goods_id
     },
     PageSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
@@ -152,14 +155,16 @@ export default {
         return this.$message.info('取消删除！')
       }
 
-      const { data: res } = await this.$http.delete(`goods/${id}`)
-
-      if (res.meta.status !== 200) {
-        return this.$message.error('删除失败！')
-      }
-
-      this.$message.success('删除成功！')
-      this.getGoodsList()
+      this.$http.delete(`goods/${id}`)
+        .then(res=>{
+          let body=res.data
+          if(body.meta.status==200){
+            this.$message.success('删除成功！')
+            this.getGoodsList()
+          }else{
+            this.$message.error('删除失败')
+          }
+      })
     },
     goAddpage() {
       this.$router.push('/goods/add')

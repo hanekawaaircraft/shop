@@ -172,14 +172,6 @@ export default {
       })
     },
 
-    PageSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize
-      this.getOrderList()
-    },
-    PageChange(newPage) {
-      this.queryInfo.pagenum = newPage
-      this.getOrderList()
-    },
     // 展示修改地址的对话框
     showBox() {
       this.addressShow = true
@@ -188,16 +180,26 @@ export default {
       this.$refs.addressFormRef.resetFields()
     },
     async showProgressBox() {
-      const { data: res } = await this.$http.get('/kuaidi/804909574412544580')
-
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取物流进度失败！')
-      }
-
-      this.progressMsg = res.data
-
-      this.progressShow = true
-      console.log(this.progressMsg)
+      this.$http.get('/kuaidi/804909574412544580')
+      .then(res=>{
+        let body=res.data
+        if (body.meta.status == 200) {
+          console.log(res)
+          this.progressMsg = body.data
+          this.progressShow = true
+        }
+        else{
+          this.$message.error('获取物流进度失败！')
+        }
+      })
+    },
+    PageSizeChange(newSize) {
+      this.queryInfo.pagesize = newSize
+      this.getOrderList()
+    },
+    PageChange(newPage) {
+      this.queryInfo.pagenum = newPage
+      this.getOrderList()
     }
   }
 }
