@@ -15,7 +15,7 @@
 
     <!-- 卡片视图 -->
     <Card>
-      <Table border :columns="columns" :data="rightsList">
+      <Table border :columns="columns" :data="rightsList"  style="width: 100%;">
         <template slot-scope="scope" slot="level">
           <Tag v-if="scope.row.level==='0'">一级</Tag>
           <Tag color="green" v-else-if="scope.row.level==='1'">二级</Tag>
@@ -74,5 +74,8 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style scoped>
+.ivu-table-overflowX {
+  overflow-x: hidden !important;
+}
 </style>

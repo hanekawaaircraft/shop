@@ -36,7 +36,7 @@
         </template>
       </Table>
      
-       <Page 
+      <Page 
         :total="total" 
         show-sizer 
         @on-change="PageChange"
@@ -46,8 +46,8 @@
     </Card>
 
     <!-- 修改地址的对话框 -->
-    <Modal title="修改地址" v-model="addressVisible" width="50%" @close="addressDialogClosed">
-      <Form :model="addressForm" :rules="addressFormRules" ref="addressFormRef">
+    <Modal title="修改地址" v-model="addressShow" width="50%" @close="addressModalHide">
+      <Form :model="addressForm" :rules="addressRule" ref="addressFormRef">
         <FormItem label="省市区/县" prop="address1">
           <Cascader :data="cityData" v-model="addressForm.address1"></Cascader>
         </FormItem>
@@ -56,16 +56,16 @@
         </FormItem>
       </Form>
       <span slot="footer" class="dialog-footer">
-        <Button @click="addressVisible = false">取 消</Button>
-        <Button type="primary" @click="addressVisible = false">确 定</Button>
+        <Button @click="addressShow = false">取 消</Button>
+        <Button type="primary" @click="addressShow = false">确 定</Button>
       </span>
     </Modal>
 
     <!-- 展示物流进度的对话框 -->
-    <Modal title="物流进度" v-model="progressVisible" width="50%">
+    <Modal title="物流进度" v-model="progressShow" width="50%">
       <!-- 时间线 -->
       <Timeline>
-        <TimelineItem v-for="(activity, index) in progressInfo" :key="index" :timestamp="activity.time">
+        <TimelineItem v-for="(activity, index) in progressMsg" :key="index" :timestamp="activity.time">
           {{activity.context}}
         </TimelineItem>
       </Timeline>
@@ -126,12 +126,12 @@ export default {
       },
       total: 0,
       orderlist: [],
-      addressVisible: false,
+      addressShow: false,
       addressForm: {
         address1: [],
         address2: ''
       },
-      addressFormRules: {
+      addressRule: {
         address1: [
           { required: true, message: '请选择省市区县', trigger: 'blur' }
         ],
@@ -140,8 +140,8 @@ export default {
         ]
       },
       cityData,
-      progressVisible: false,
-      progressInfo: []
+      progressShow: false,
+      progressMsg: []
     }
   },
   created() {
@@ -171,9 +171,9 @@ export default {
     },
     // 展示修改地址的对话框
     showBox() {
-      this.addressVisible = true
+      this.addressShow = true
     },
-    addressDialogClosed() {
+    addressModalHide() {
       this.$refs.addressFormRef.resetFields()
     },
     async showProgressBox() {
@@ -183,15 +183,11 @@ export default {
         return this.$message.error('获取物流进度失败！')
       }
 
-      this.progressInfo = res.data
+      this.progressMsg = res.data
 
-      this.progressVisible = true
-      console.log(this.progressInfo)
+      this.progressShow = true
+      console.log(this.progressMsg)
     }
   }
 }
 </script>
-
-<style lang="less" scoped>
-
-</style>

@@ -414,6 +414,3 @@ export default {
   }
 }
 </script>
-<style scpoed>
- 
-</style>

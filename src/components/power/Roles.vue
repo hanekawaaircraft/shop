@@ -16,11 +16,11 @@
     <!-- 卡片视图 -->
     <Card>
       <!-- 添加角色按钮区域 -->
-      <Row>
+      <!-- <Row>
         <Col>
-          <!-- <Button color="primary">添加角色</Button> -->
+          <Button color="primary">添加角色</Button>
         </Col>
-      </Row>
+      </Row> -->
 
       <Table border :columns="columns" :data="rolelist">
         <template slot-scope="scope" slot="active">

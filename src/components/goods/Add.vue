@@ -29,7 +29,7 @@
 
       <!-- tab栏区域 -->
 
-      <Form :model="addForm" :rules="addFormRules" ref="addFormRef"  label-position="top">
+      <Form :model="addForm" :rules="addRules" ref="addFormRef"  label-position="top">
         <Tabs v-model="activeIndex" :tab-position="'left'" :before-leave="beforeTabLeave" @tab-click="tabClicked">
           <TabPane label="基本信息" name="0">
             <FormItem label="商品名称" prop="goods_name">
@@ -107,7 +107,7 @@ export default {
         goods_introduce: '',
         attrs: []
       },
-      addFormRules: {
+      addRules: {
         goods_name: [
           { required: true, message: '请输入商品名称', trigger: 'blur' }
         ],

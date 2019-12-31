@@ -93,7 +93,7 @@
     </Modal>
 
     <!-- 修改参数的对话框 -->
-    <Modal :title="'修改' + titleText" v-model="editModalShow" width="50%" @close="editDialogClosed">
+    <Modal :title="'修改' + titleText" v-model="editModalShow" width="50%" @close="editModalHide">
       <!-- 添加参数的对话框 -->
       <Form :model="editForm" :rules="editRules" ref="editFormRef">
         <FormItem :label="titleText" prop="attr_name">
@@ -283,7 +283,7 @@ export default {
       this.editModalShow = true
     },
     // 重置修改的表单
-    editDialogClosed() {
+    editModalHide() {
       this.$refs.editFormRef.resetFields()
     },
     // 点击按钮，修改参数信息
