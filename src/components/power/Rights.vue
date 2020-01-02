@@ -61,21 +61,13 @@ export default {
   },
   methods: {
     // 获取权限列表
-    getRightsList() {
-      this.$Loading.start();
-      this.$http.get('rights/list')
-        .then(res=>{
-        let body=res.data
-        if (body.meta.status == 200) {
-          this.rightsList = body.data
-          console.log(this.rightsList)
-          this.$Loading.finish();
-        }
-        else{
-          return this.$message.error('获取商品分类失败！')
-          this.$Loading.error();
-        }
-      })
+    async getRightsList() {
+      const { data: res } = await this.$http.get('rights/list')
+      if (res.meta.status !== 200) {
+        return this.$message.error('获取权限列表失败！')
+      }
+      this.rightsList = res.data
+      console.log(this.rightsList)
     }
   }
 }

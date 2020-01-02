@@ -54,12 +54,29 @@ export default {
     }
   },
   methods: {
+    // postUser(){
+    //   this.$http.psot('login',this.loginForm).then(res=>{
+    //     if(res.data.meta.status==200){
+    //       this.$message.success('登陆成功')
+    //       this.$Loading.finish()
+    //       let user=res.data.username
+    //       // console.log(user)
+    //       window.sessionStorage.setItem('token', res.data.token)
+    //       window.sessionStorage.setItem('user',res.data.username)
+    //       this.$router.push('/home')
+    //     }else{
+    //       this.$message.error('登录失败！')
+    //       this.$Loading.error();
+    //     }
+    //   })
+    // },
     //登录验证
     login() {
+      
       this.$Loading.start();
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return
-        //{ data : res } 从axios封装好的包中返回的对象中解构出data 并且重命名为res
+        // { data : res } 从axios封装好的包中返回的对象中解构出data 并且重命名为res
         const { data: res } = await this.$http.post('login', this.loginForm)
         if (res.meta.status !== 200) {
           return this.$message.error('登录失败！')

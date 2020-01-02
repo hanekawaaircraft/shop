@@ -187,9 +187,7 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error('获取商品分类失败！')
       }
-
       this.catelist = res.data
-
       console.log(this.catelist)
     },
     // 级联选择框选中项变化，会触发这个函数

@@ -182,7 +182,7 @@ export default {
     addressModalHide() {
       this.$refs.addressFormRef.resetFields()
     },
-    async showProgressBox() {
+    showProgressBox() {
       this.$http.get('/kuaidi/804909574412544580')
       .then(res=>{
         let body=res.data
