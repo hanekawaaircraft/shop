@@ -30,7 +30,7 @@
       <!-- tab栏区域 -->
 
       <Form :model="addForm" :rules="addRules" ref="addFormRef"  label-position="top">
-        <Tabs v-model="activeIndex" :tab-position="'left'" :before-leave="beforeTabLeave" @tab-click="tabClicked">
+        <Tabs v-model="activeIndex" @on-click="tabClicked">
           <TabPane label="基本信息" name="0">
             <FormItem label="商品名称" prop="goods_name">
               <Input v-model="addForm.goods_name"></Input>
@@ -54,7 +54,7 @@
             <FormItem :label="item.attr_name" v-for="item in manyTableData" :key="item.attr_id">
               <!-- 复选框组 -->
               <CheckboxGroup v-model="item.attr_vals">
-                <Checkbox :label="cb" v-for="(cb, i) in item.attr_vals" :key="i" border></Checkbox>
+                <Checkbox :label="CardTab" v-for="(CardTab, i) in item.attr_vals" :key="i" border></Checkbox>
               </CheckboxGroup>
             </FormItem>
           </TabPane>
@@ -167,12 +167,6 @@ export default {
         this.addForm.goods_cat = []
       }
     },
-    beforeTabLeave(activeName, oldActiveName) {
-      if (oldActiveName === '0' && this.addForm.goods_cat.length !== 3) {
-        this.$message.error('请先选择商品分类！')
-        return false
-      }
-    },
     async tabClicked() {
       // 证明访问的是动态参数面板
       if (this.activeIndex === '1') {
@@ -187,7 +181,7 @@ export default {
           return this.$message.error('获取动态参数列表失败！')
         }
 
-        console.log(res.data)
+        // console.log(res.data)
         res.data.forEach(item => {
           item.attr_vals =
             item.attr_vals.length === 0 ? [] : item.attr_vals.split(' ')
@@ -205,35 +199,30 @@ export default {
           return this.$message.error('获取静态属性失败！')
         }
 
-        console.log(res.data)
+        // console.log(res.data)
         this.onlyTableData = res.data
       }
     },
     // 处理图片预览效果
     handlePhoto(file) {
-      console.log(file)
       this.photoPath = file.response.data.url
       this.photoShow = true
     },
     // 处理移除图片的操作
     handleRemove(file) {
-      // console.log(file)
       // 1. 获取将要删除的图片的临时路径
       const filePath = file.response.data.tmp_path
       // 2. 从 pics 数组中，找到这个图片对应的索引值
       const i = this.addForm.pics.findIndex(x => x.pic === filePath)
       // 3. 调用数组的 splice 方法，把图片信息对象，从 pics 数组中移除
       this.addForm.pics.splice(i, 1)
-      console.log(this.addForm)
     },
     // 监听图片上传成功的事件
     handleSuccess(response) {
-      console.log(response)
       // 1. 拼接得到一个图片信息对象
       const picInfo = { pic: response.data.tmp_path }
       // 2. 将图片信息对象，push 到pics数组中
       this.addForm.pics.push(picInfo)
-      console.log(this.addForm)
     },
     // 添加商品
     add() {
@@ -259,12 +248,10 @@ export default {
           this.addForm.attrs.push(newInfo)
         })
         form.attrs = this.addForm.attrs
-        console.log(form)
 
         // 发起请求添加商品
         // 商品的名称，必须是唯一的
         const { data: res } = await this.$http.post('goods', form)
-
         if (res.meta.status !== 201) {
           return this.$message.error('添加商品失败！')
         }

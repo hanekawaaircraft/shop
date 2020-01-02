@@ -55,12 +55,13 @@ export default {
   },
   methods: {
     // postUser(){
-    //   this.$http.psot('login',this.loginForm).then(res=>{
+    //   this.$http.psot('login',{
+    //    this.loginForm
+    //    }).then(res=>{
     //     if(res.data.meta.status==200){
     //       this.$message.success('登陆成功')
     //       this.$Loading.finish()
     //       let user=res.data.username
-    //       // console.log(user)
     //       window.sessionStorage.setItem('token', res.data.token)
     //       window.sessionStorage.setItem('user',res.data.username)
     //       this.$router.push('/home')

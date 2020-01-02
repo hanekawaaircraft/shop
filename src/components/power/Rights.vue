@@ -61,13 +61,14 @@ export default {
   },
   methods: {
     // 获取权限列表
-    async getRightsList() {
-      const { data: res } = await this.$http.get('rights/list')
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取权限列表失败！')
-      }
-      this.rightsList = res.data
-      console.log(this.rightsList)
+    getRightsList() {
+      this.$http.get('rights/list').then(res=>{
+        if(res.data.meta.status==200){
+          this.rightsList=res.data.data
+        }else{
+          this.$message.error('获取权限列表失败!')
+        }
+      })
     }
   }
 }

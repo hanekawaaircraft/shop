@@ -29,7 +29,7 @@
       </Row>
 
       <!-- tab 页签区域 -->
-      <Tabs v-model="activeName" @tab-click="handleTabClick">
+      <Tabs v-model="activeName" @on-click="handleTabClick">
         <!-- 添加动态参数的面板 -->
         <TabPane label="动态参数" name="many">
           <!-- 添加参数的按钮 -->
@@ -183,12 +183,13 @@ export default {
   methods: {
     // 获取所有的商品分类列表
     async getCateList() {
-      const { data: res } = await this.$http.get('categories')
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取商品分类失败！')
-      }
-      this.catelist = res.data
-      console.log(this.catelist)
+      this.$http.get('categories').then(res=>{
+        if(res.data.meta.status==200){
+          this.catelist=res.data.data
+        }else{
+          this.$message.error('获取商品分类失败!')
+        }
+      })
     },
     // 级联选择框选中项变化，会触发这个函数
     handleChange() {
@@ -196,6 +197,9 @@ export default {
     },
     // tab 页签点击事件的处理函数
     handleTabClick() {
+      this.selectedCateKeys = []
+      this.manyTableData = []
+      this.onlyTableData = []
       console.log(this.activeName)
       this.getParamsData()
     },
@@ -218,11 +222,9 @@ export default {
           params: { sel: this.activeName }
         }
       )
-
       if (res.meta.status !== 200) {
         return this.$message.error('获取参数列表失败！')
       }
-
       res.data.forEach(item => {
         item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : []
         // 控制文本框的显示与隐藏
@@ -411,7 +413,6 @@ export default {
 .buttonAdd{
   margin-bottom: 15px;
 }
-
 .ivu-tag  {
   margin: 5px;
 }
