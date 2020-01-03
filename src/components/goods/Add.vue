@@ -153,15 +153,15 @@ export default {
   },
   methods: {
     // 获取所有商品分类数据
-    async getCateList() {
-      const { data: res } = await this.$http.get('categories')
-
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取商品分类数据失败！')
-      }
-
-      this.catelist = res.data
-      console.log(this.catelist)
+    getCateList() {
+      this.$http.get('categories').then(res=>{
+        if (res.data.meta.status == 200) {
+          this.catelist = res.data.data
+          console.log(this.catelist)
+        }else{
+          this.$message.error('获取商品分类数据失败！')
+        }
+      })
     },
     // 级联选择器选中项变化，会触发这个函数
     handleChange() {
@@ -170,37 +170,32 @@ export default {
         this.addForm.goods_cat = []
       }
     },
-    async tabClicked() {
+    tabClicked() {
       // 证明访问的是动态参数面板
       if (this.activeIndex === '1') {
-        const { data: res } = await this.$http.get(
-          `categories/${this.cateId}/attributes`,
-          {
+        this.$http.get(`categories/${this.cateId}/attributes`,{
             params: { sel: 'many' }
-          }
-        )
-
-        if (res.meta.status !== 200) {
-          return this.$message.error('获取动态参数列表失败！')
-        }
-
-        res.data.forEach(item => {
-          item.attr_vals = item.attr_vals.length === 0 ? [] : item.attr_vals.split(' ')
-        })
-        this.manyTableData = res.data
+          }).then(res=>{
+            if (res.data.meta.status == 200) {
+              res.data.data.forEach(item => {
+                item.attr_vals = item.attr_vals.length === 0 ? [] : item.attr_vals.split(' ')
+              })
+              this.manyTableData = res.data.data
+            }else{
+              this.$message.error('获取动态参数列表失败！')
+            }
+          })
+     
       } else if (this.activeIndex === '2') {
-        const { data: res } = await this.$http.get(
-          `categories/${this.cateId}/attributes`,
-          {
+        this.$http.get(`categories/${this.cateId}/attributes`,{
             params: { sel: 'only' }
-          }
-        )
-
-        if (res.meta.status !== 200) {
-          return this.$message.error('获取静态属性失败！')
-        }
-
-        this.onlyTableData = res.data
+          }).then(res=>{
+            if (res.data.meta.status == 200) {
+              this.onlyTableData = res.data.data
+            }else{
+              this.$message.error('获取静态属性失败！')
+            }
+          })
       }
     },
     // 处理图片预览效果

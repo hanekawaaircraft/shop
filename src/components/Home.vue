@@ -4,7 +4,9 @@
       <div>
         <span>电商后台管理系统</span>
       </div>
-      <Button type="info" @click="logout">{{username}},退出登录</Button>
+      <div>
+        欢迎{{username}},<Button @click="logout">退出登录</Button>
+      </div>
     </Header>
 
     <Layout>    

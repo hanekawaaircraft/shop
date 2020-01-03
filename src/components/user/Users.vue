@@ -248,7 +248,7 @@ export default {
     this.getUserList()
   },
   methods: {
-    async getUserList() {
+    getUserList() {
       this.$http.get('users', {
           params: this.queryInfo
       }).then(res=>{
@@ -293,7 +293,7 @@ export default {
     },
     // 点击按钮，添加新用户
     addUser() {
-      this.$refs.addFormRef.validate(async valid => {
+      this.$refs.addFormRef.validate(valid => {
         if (!valid) return
         // 可以发起添加用户的网络请求
         this.$http.post('users', this.addForm).then(res=>{
@@ -310,16 +310,16 @@ export default {
       })
     },
     // 展示编辑用户的对话框
-    async showEditModal(id) {
+    showEditModal(id) {
       // console.log(id)
-      const { data: res } = await this.$http.get('users/' + id)
-
-      if (res.meta.status !== 200) {
-        return this.$message.error('查询用户信息失败！')
-      }
-
-      this.editForm = res.data
-      this.editModalShow = true
+      this.$http.get('users/' + id).then(res=>{
+        if (res.data.meta.status == 200) {
+          this.editForm = res.data.data
+          this.editModalShow = true
+        }else{
+          this.$message.error('查询用户信息失败！')
+        }
+      })
     },
     // 监听修改用户对话框的关闭事件
     addModalHide() {
@@ -327,7 +327,7 @@ export default {
     },
     // 修改用户信息并提交
     editUserInfo() {
-      this.$refs.editFormRef.validate(async valid => {
+      this.$refs.editFormRef.validate(valid => {
         if (!valid) return
         // 发起修改用户信息的数据请求
         this.$http.put('users/' + this.editForm.id,{
@@ -376,7 +376,7 @@ export default {
       })
     },
     // 展示分配角色的对话框
-    async setRole(userInfo) {
+    setRole(userInfo) {
       this.userInfo = userInfo
       // 在展示对话框之前，获取所有角色的列表
       this.$http.get('roles').then(res=>{
@@ -389,7 +389,7 @@ export default {
       })
     },
     // 点击按钮，分配角色
-    async saveRoleInfo() {
+    saveRoleInfo() {
       if (!this.selectedRoleId) {
         return this.$message.error('请选择要分配的角色！')
       }

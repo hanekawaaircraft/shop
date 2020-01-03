@@ -243,7 +243,7 @@ export default {
     },
     // 点击按钮，添加参数
     addParams() {
-      this.$refs.addFormRef.validate(async valid => {
+      this.$refs.addFormRef.validate(valid => {
         if (!valid) return
         this.$http.post( `categories/${this.cateId}/attributes`,
           {
@@ -283,7 +283,7 @@ export default {
     },
     // 点击按钮，修改参数信息
     editParams() {
-      this.$refs.editFormRef.validate(async valid => {
+      this.$refs.editFormRef.validate(valid => {
         if (!valid) return
         this.$http.put(`categories/${this.cateId}/attributes/${this.editForm.attr_id}`,
         { 
@@ -330,7 +330,7 @@ export default {
       })
     },
     // 文本框失去焦点，或摁下了 Enter 都会触发
-    async handleInputConfirm(row) {
+    handleInputConfirm(row) {
       if (row.inputValue.trim().length === 0) {
         row.inputValue = ''
         row.inputShow = false
