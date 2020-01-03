@@ -15,6 +15,10 @@
 
     <!-- 卡片视图区域 -->
     <Card>
+      <div class="addBtn"> 
+        <Button type="primary" @click="addModalShow = true">添加管理员</Button>
+      </div>
+    
       <!-- 用户列表区域 -->
       <Table border :columns="columns" :data="userlist">
         <template slot-scope="scope" slot="mg_state">
@@ -89,7 +93,7 @@
     </Modal>
 
     <!-- 分配角色的对话框 -->
-    <Modal title="分配角色" v-model="setRoleModalShow" width="50%" @close="setRoleDialogClosed">
+    <Modal title="分配角色" v-model="setRoleModalShow" width="50%" @close="setRoleModalHide">
       <div>
         <p>当前的用户：{{userInfo.username}}</p>
         <p>当前的角色：{{userInfo.role_name}}</p>
@@ -192,8 +196,8 @@ export default {
           { required: true, message: '请输入用户名', trigger: 'blur' },
           {
             min: 3,
-            max: 10,
-            message: '用户名的长度在3~10个字符之间',
+            max: 12,
+            message: '用户名的长度在3~12个字符之间',
             trigger: 'blur'
           }
         ],
@@ -245,15 +249,17 @@ export default {
   },
   methods: {
     async getUserList() {
-      const { data: res } = await this.$http.get('users', {
-        params: this.queryInfo
+      this.$http.get('users', {
+          params: this.queryInfo
+      }).then(res=>{
+        let body=res.data
+        if (body.meta.status !== 200) {
+          this.$message.error('获取用户列表失败！')
+        }else{
+          this.userlist = body.data.users
+          this.total = body.total
+        }
       })
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取用户列表失败！')
-      }
-      this.userlist = res.data.users
-      this.total = res.data.total
-      console.log(res)
     },
     // 监听 pagesize 改变的事件
     PageSizeChange(newSize) {
@@ -268,16 +274,18 @@ export default {
       this.getUserList()
     },
     // 监听 switch 开关状态的改变
-    async userStateChanged(userinfo) {
+    userStateChanged(userinfo) {
       console.log(userinfo)
-      const { data: res } = await this.$http.put(
+      this.$http.put(
         `users/${userinfo.id}/state/${userinfo.mg_state}`
-      )
-      if (res.meta.status !== 200) {
-        userinfo.mg_state = !userinfo.mg_state
-        return this.$message.error('更新用户状态失败！')
-      }
-      this.$message.success('更新用户状态成功！')
+        ).then(res=>{
+          if (res.data.meta.status == 200) {
+            this.$message.success('更新用户状态成功！')
+          }else{
+            userinfo.mg_state = !userinfo.mg_state
+            return this.$message.error('更新用户状态失败！')
+          }
+        })
     },
     // 监听添加用户对话框的关闭事件
     addModalHide() {
@@ -288,17 +296,17 @@ export default {
       this.$refs.addFormRef.validate(async valid => {
         if (!valid) return
         // 可以发起添加用户的网络请求
-        const { data: res } = await this.$http.post('users', this.addForm)
-
-        if (res.meta.status !== 201) {
-          this.$message.error('添加用户失败！')
-        }
-
-        this.$message.success('添加用户成功！')
-        // 隐藏添加用户的对话框
-        this.addModalShow = false
-        // 重新获取用户列表数据
-        this.getUserList()
+        this.$http.post('users', this.addForm).then(res=>{
+          if (res.data.meta.status == 201) {
+            this.$message.success('添加用户成功！')
+            // 隐藏添加用户的对话框
+            this.addModalShow = false
+            // 重新获取用户列表数据
+            this.getUserList()
+          }else{
+            this.$message.error('添加用户失败！')
+          }
+        })
       })
     },
     // 展示编辑用户的对话框
@@ -322,24 +330,21 @@ export default {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) return
         // 发起修改用户信息的数据请求
-        const { data: res } = await this.$http.put(
-          'users/' + this.editForm.id,
-          {
+        this.$http.put('users/' + this.editForm.id,{
             email: this.editForm.email,
             mobile: this.editForm.mobile
-          }
-        )
-
-        if (res.meta.status !== 200) {
-          return this.$message.error('更新用户信息失败！')
-        }
-
-        // 关闭对话框
-        this.editModalShow = false
-        // 刷新数据列表
-        this.getUserList()
-        // 提示修改成功
-        this.$message.success('更新用户信息成功！')
+          }).then(res=>{
+            if (res.data.meta.status == 200) {
+              // 关闭对话框
+              this.editModalShow = false
+              // 刷新数据列表
+              this.getUserList()
+              // 提示修改成功
+              this.$message.success('更新用户信息成功！')
+            }else{
+              this.$message.error('更新用户信息失败！')
+            }
+          })
       })
     },
     // 根据Id删除对应的用户信息
@@ -361,54 +366,55 @@ export default {
       if (MsgResult !== 'confirm') {
         return this.$message.info('已取消删除')
       }
-
-      const { data: res } = await this.$http.delete('users/' + id)
-
-      if (res.meta.status !== 200) {
-        return this.$message.error('删除用户失败！')
-      }
-
-      this.$message.success('删除用户成功！')
-      this.getUserList()
+      this.$http.delete('users/' + id).then(res=>{
+        if (res.data.meta.status == 200) {
+          this.$message.success('删除用户成功！')
+          this.getUserList()
+        }else{
+          return this.$message.error('删除用户失败！')
+        }
+      })
     },
     // 展示分配角色的对话框
     async setRole(userInfo) {
       this.userInfo = userInfo
-
       // 在展示对话框之前，获取所有角色的列表
-      const { data: res } = await this.$http.get('roles')
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取角色列表失败！')
-      }
-      this.rolesList = res.data
-      this.setRoleModalShow = true
+      this.$http.get('roles').then(res=>{
+        if (res.data.meta.status == 200) {
+          this.rolesList = res.data.data
+          this.setRoleModalShow = true
+        }else{
+          return this.$message.error('获取角色列表失败！')
+        }
+      })
     },
     // 点击按钮，分配角色
     async saveRoleInfo() {
       if (!this.selectedRoleId) {
         return this.$message.error('请选择要分配的角色！')
       }
-
-      const { data: res } = await this.$http.put(
-        `users/${this.userInfo.id}/role`,
-        {
+      this.$http.put(`users/${this.userInfo.id}/role`,{
           rid: this.selectedRoleId
-        }
-      )
-
-      if (res.meta.status !== 200) {
-        return this.$message.error('更新角色失败！')
-      }
-
-      this.$message.success('更新角色成功！')
-      this.getUserList()
-      this.setRoleModalShow = false
+        }).then(res=>{
+          if (res.data.meta.status == 200) {
+            this.$message.success('更新角色成功！')
+            this.getUserList()
+            this.setRoleModalShow = false
+          }else{
+             return this.$message.error('更新角色失败！')
+          }
+        })
     },
     // 监听分配角色对话框的关闭事件
-    setRoleDialogClosed() {
+    setRoleModalHide() {
       this.selectedRoleId = ''
       this.userInfo = {}
     }
   }
 }
 </script>
+<style scoped>
+  .addBtn{
+    margin-bottom: 10px
+  }
+</style>

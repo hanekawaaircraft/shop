@@ -181,28 +181,6 @@ export default {
     this.getCateList()
   },
   methods: {
-    // 获取所有的商品分类列表
-    async getCateList() {
-      this.$http.get('categories').then(res=>{
-        if(res.data.meta.status==200){
-          this.catelist=res.data.data
-        }else{
-          this.$message.error('获取商品分类失败!')
-        }
-      })
-    },
-    // 级联选择框选中项变化，会触发这个函数
-    handleChange() {
-      this.getParamsData()
-    },
-    // tab 页签点击事件的处理函数
-    handleTabClick() {
-      this.selectedCateKeys = []
-      this.manyTableData = []
-      this.onlyTableData = []
-      console.log(this.activeName)
-      this.getParamsData()
-    },
     // 获取参数的列表数据
     getParamsData() {
       // 证明选中的不是三级分类
@@ -236,6 +214,28 @@ export default {
           this.$message.error('获取参数列表失败')
         }
       })
+    },
+    // 获取所有的商品分类列表
+    getCateList() {
+      this.$http.get('categories').then(res=>{
+        if(res.data.meta.status==200){
+          this.catelist=res.data.data
+        }else{
+          this.$message.error('获取商品分类失败!')
+        }
+      })
+    },
+    // 级联选择框选中项变化，会触发这个函数
+    handleChange() {
+      this.getParamsData()
+    },
+    // tab 页签点击事件的处理函数
+    handleTabClick() {
+      this.selectedCateKeys = []
+      this.manyTableData = []
+      this.onlyTableData = []
+      console.log(this.activeName)
+      this.getParamsData()
     },
     // 监听添加对话框的关闭事件
     addModalHide() {
@@ -344,7 +344,7 @@ export default {
       this.saveAttrVals(row)
     },
     // 将对 attr_vals 的操作，保存到数据库
-    async saveAttrVals(row) {
+    saveAttrVals(row) {
       // 需要发起请求，保存这次操作
       this.$http.put(
          `categories/${this.cateId}/attributes/${row.attr_id}`,

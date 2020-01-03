@@ -62,23 +62,21 @@ export default {
       }
     }
   },
-  created() {},
-  async mounted() {
+  mounted() {
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'))
-
-    const { data: res } = await this.$http.get('reports/type/1')
-    if (res.meta.status !== 200) {
-      return this.$message.error('获取折线图数据失败！')
-    }
-
-    // 准备数据和配置项
-    //merge 函数是将源对象的自身可枚举属性递归地合到目标对象中
-    const result = _.merge(res.data, this.options)
-
-    // 展示数据
-    myChart.setOption(result)
-  },
-  methods: {}
+    this.$http.get('reports/type/1')
+    .then(res=>{
+      if (res.data.meta.status !== 200) {
+        this.$message.error('获取折线图数据失败！')
+      }else{
+         // 准备数据和配置项
+      //merge 函数是将源对象的自身可枚举属性递归地合到目标对象中
+      const result = _.merge(res.data.data, this.options)
+      // 展示数据
+      myChart.setOption(result)
+      }
+    })
+  }
 }
 </script>
