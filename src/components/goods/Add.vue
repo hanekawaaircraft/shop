@@ -30,9 +30,10 @@
 
       <!-- tab栏区域 -->
 
-      <Form :model="addForm" :rules="addFormRules" ref="addFormRef" label-position="top">
+      <Form :model="addForm" :rules="addRules" ref="addFormRef" label-position="top">
         <Tabs v-model="activeIndex" @on-click="tabClicked">
           <TabPane label="基本信息" name="0">
+            <Alert center show-icon :closable="false">本页面均为必填项</Alert>
             <FormItem label="商品名称" prop="goods_name">
               <Input v-model="addForm.goods_name"></Input>
             </FormItem>
@@ -55,7 +56,7 @@
             <FormItem :label="item.attr_name" v-for="item in manyTableData" :key="item.attr_id">
               <!-- 复选框组 -->
               <CheckboxGroup v-model="item.attr_vals">
-                <Checkbox :label="CardTab" v-for="(CardTab, i) in item.attr_vals" :key="i" border></Checkbox>
+                <Checkbox :label="checkTab" v-for="(checkTab, i) in item.attr_vals" :key="i"></Checkbox>
               </CheckboxGroup>
             </FormItem>
           </TabPane>
@@ -66,7 +67,7 @@
           </TabPane>
           <TabPane label="商品图片" name="3">
             <!-- action 表示图片要上传到的后台API地址 -->
-            <Upload :action="uploadURL" :on-preview="handlePreview" :on-remove="handleRemove" list-type="picture" :headers="headerObj" :on-success="handleSuccess">
+            <Upload :action="uploadURL" :on-preview="handleShow" :on-remove="handleRemove" list-type="picture" :headers="headerObj" :on-success="handleSuccess">
               <Button size="small" type="primary">点击上传</Button>
             </Upload>
           </TabPane>
@@ -82,8 +83,8 @@
     </Card>
 
     <!-- 图片预览 -->
-    <Modal title="图片预览" v-model="previewVisible" width="50%">
-      <img :src="previewPath" alt="" class="previewImg">
+    <Modal title="图片预览" v-model="photoShow" width="50%">
+      <img :src="photoPath" alt="" class="previewImg">
     </Modal>
   </div>
 </template>
@@ -109,7 +110,7 @@ export default {
         goods_introduce: '',
         attrs: []
       },
-      addFormRules: {
+      addRules: {
         goods_name: [
           { required: true, message: '请输入商品名称', trigger: 'blur' }
         ],
@@ -122,9 +123,9 @@ export default {
         goods_number: [
           { required: true, message: '请输入商品数量', trigger: 'blur' }
         ],
-        // goods_cat: [
-        //   { required: true, message: '请选择商品分类', trigger: 'blur' }
-        // ]
+        goods_cat: [
+          { required: true, message: '请选择商品分类'}
+        ]
       },
       // 商品分类列表
       catelist: [],
@@ -143,8 +144,8 @@ export default {
       headerObj: {
         Authorization: window.sessionStorage.getItem('token')
       },
-      previewPath: '',
-      previewVisible: false
+      photoPath: '',
+      photoShow: false
     }
   },
   created() {
@@ -184,8 +185,7 @@ export default {
         }
 
         res.data.forEach(item => {
-          item.attr_vals =
-            item.attr_vals.length === 0 ? [] : item.attr_vals.split(' ')
+          item.attr_vals = item.attr_vals.length === 0 ? [] : item.attr_vals.split(' ')
         })
         this.manyTableData = res.data
       } else if (this.activeIndex === '2') {
@@ -204,9 +204,9 @@ export default {
       }
     },
     // 处理图片预览效果
-    handlePreview(file) {
-      this.previewPath = file.response.data.url
-      this.previewVisible = true
+    handleShow(file) {
+      this.photoPath = file.response.data.url
+      this.photoShow = true
     },
     // 处理移除图片的操作
     handleRemove(file) {

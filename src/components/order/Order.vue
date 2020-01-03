@@ -183,7 +183,7 @@ export default {
       this.$refs.addressFormRef.resetFields()
     },
     showProgressBox() {
-      this.$http.get('/kuaidi/804909574412544580')
+      this.$http.get('/kuaidi/1106975712662')
       .then(res=>{
         let body=res.data
         if (body.meta.status == 200) {

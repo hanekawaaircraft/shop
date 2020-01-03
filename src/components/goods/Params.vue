@@ -204,7 +204,7 @@ export default {
       this.getParamsData()
     },
     // 获取参数的列表数据
-    async getParamsData() {
+    getParamsData() {
       // 证明选中的不是三级分类
       if (this.selectedCateKeys.length !== 3) {
         this.selectedCateKeys = []
@@ -214,31 +214,28 @@ export default {
       }
 
       // 证明选中的是三级分类
-      console.log(this.selectedCateKeys)
-      // 根据所选分类的Id，和当前所处的面板，获取对应的参数
-      const { data: res } = await this.$http.get(
-        `categories/${this.cateId}/attributes`,
-        {
+       // 根据所选分类的Id，和当前所处的面板，获取对应的参数
+      this.$http.get(`categories/${this.cateId}/attributes`,{
           params: { sel: this.activeName }
+        }).then(res=>{
+        let body=res.data
+        if(body.meta.status==200){
+          body.data.forEach(item => {
+            item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : []
+            // 控制文本框的显示与隐藏
+            item.inputShow = false
+            // 文本框中输入的值
+            item.inputValue = ''
+          })
+          if (this.activeName === 'many') {
+            this.manyTableData = body.data
+          } else {
+            this.onlyTableData = body.data
+          }
+        }else{
+          this.$message.error('获取参数列表失败')
         }
-      )
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取参数列表失败！')
-      }
-      res.data.forEach(item => {
-        item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : []
-        // 控制文本框的显示与隐藏
-        item.inputShow = false
-        // 文本框中输入的值
-        item.inputValue = ''
       })
-
-      console.log(res.data)
-      if (this.activeName === 'many') {
-        this.manyTableData = res.data
-      } else {
-        this.onlyTableData = res.data
-      }
     },
     // 监听添加对话框的关闭事件
     addModalHide() {
@@ -248,39 +245,37 @@ export default {
     addParams() {
       this.$refs.addFormRef.validate(async valid => {
         if (!valid) return
-        const { data: res } = await this.$http.post(
-          `categories/${this.cateId}/attributes`,
+        this.$http.post( `categories/${this.cateId}/attributes`,
           {
             attr_name: this.addForm.attr_name,
             attr_sel: this.activeName
-          }
-        )
-
-        if (res.meta.status !== 201) {
-          return this.$message.error('添加参数失败！')
-        }
-
-        this.$message.success('添加参数成功！')
-        this.addModalShow = false
-        this.getParamsData()
+          }).then(res=>{
+            let body=res.data 
+            if(body.meta.status==201){
+              this.$message.success('添加参数成功！')
+              this.addModalShow = false
+              this.getParamsData()
+            }else{
+              this.$message.error('添加参数失败')
+            }
+          })
       })
     },
     // 点击按钮，展示修改的对话框
-    async showEditModal(attrId) {
+    showEditModal(attrId) {
       // 查询当前参数的信息
-      const { data: res } = await this.$http.get(
-        `categories/${this.cateId}/attributes/${attrId}`,
+      this.$http.get(`categories/${this.cateId}/attributes/${attrId}`,
         {
           params: { attr_sel: this.activeName }
-        }
-      )
-
-      if (res.meta.status !== 200) {
-        return this.$message.error('获取参数信息失败！')
-      }
-
-      this.editForm = res.data
-      this.editModalShow = true
+        }).then(res=>{
+          let body=res.data
+          if(body.meta.status==200){
+            this.editForm = body.data
+            this.editModalShow = true
+          }else{
+            this.$message.error('获取参数信息失败！')
+          }
+        })
     },
     // 重置修改的表单
     editModalHide() {
@@ -290,18 +285,19 @@ export default {
     editParams() {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) return
-        const { data: res } = await this.$http.put(
-          `categories/${this.cateId}/attributes/${this.editForm.attr_id}`,
-          { attr_name: this.editForm.attr_name, attr_sel: this.activeName }
-        )
-
-        if (res.meta.status !== 200) {
-          return this.$message.error('修改参数失败！')
-        }
-
-        this.$message.success('修改参数成功！')
-        this.getParamsData()
-        this.editModalShow = false
+        this.$http.put(`categories/${this.cateId}/attributes/${this.editForm.attr_id}`,
+        { 
+          attr_name: this.editForm.attr_name, attr_sel: this.activeName 
+        }).then(res=>{
+          let body=res.data
+          if(body.meta.status==200){
+            this.$message.success('修改参数成功！')
+            this.getParamsData()
+            this.editModalShow = false
+          }else{
+            this.$message.error('修改参数失败！')
+          }
+        })
       })
     },
     // 根据Id删除对应的参数项
@@ -322,16 +318,16 @@ export default {
       }
 
       // 删除的业务逻辑
-      const { data: res } = await this.$http.delete(
+      this.$http.delete(
         `categories/${this.cateId}/attributes/${attrId}`
-      )
-
-      if (res.meta.status !== 200) {
-        return this.$message.error('删除参数失败！')
-      }
-
-      this.$message.success('删除参数成功！')
-      this.getParamsData()
+      ).then(res=>{
+        if (res.data.meta.status !== 200) {
+          return this.$message.error('删除参数失败！')
+        }else{
+          this.$message.success('删除参数成功！')
+          this.getParamsData()
+        }
+      })
     },
     // 文本框失去焦点，或摁下了 Enter 都会触发
     async handleInputConfirm(row) {
@@ -350,20 +346,20 @@ export default {
     // 将对 attr_vals 的操作，保存到数据库
     async saveAttrVals(row) {
       // 需要发起请求，保存这次操作
-      const { data: res } = await this.$http.put(
-        `categories/${this.cateId}/attributes/${row.attr_id}`,
+      this.$http.put(
+         `categories/${this.cateId}/attributes/${row.attr_id}`,
         {
           attr_name: row.attr_name,
           attr_sel: row.attr_sel,
           attr_vals: row.attr_vals.join(' ')
         }
-      )
-
-      if (res.meta.status !== 200) {
-        return this.$message.error('修改参数项失败！')
-      }
-
-      this.$message.success('修改参数项成功！')
+      ).then(res=>{
+         if (res.data.meta.status !== 200) {
+          return this.$message.error('修改参数项失败！')
+        }else{
+          this.$message.success('修改参数项成功！')
+        }
+      })
     },
     // 点击按钮，展示文本输入框
     showInput(row) {
