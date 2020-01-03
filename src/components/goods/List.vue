@@ -123,7 +123,6 @@ export default {
       }).then(res=>{
         let body=res.data
         if(body.meta.status==200){
-          console.log(res.data)
           this.goodslist = body.data.goods
           this.total = body.data.total
           this.goodid=body.data.goods_id

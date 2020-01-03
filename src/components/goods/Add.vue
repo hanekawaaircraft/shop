@@ -12,9 +12,10 @@
         <Icon type="ios-cafe"></Icon> 添加商品
       </BreadcrumbItem>
     </Breadcrumb>
+
     <!-- 卡片视图 -->
     <Card>
-      <!-- 提示区域 -->
+       <!-- 提示区域 -->
       <Alert type="info" center show-icon :closable="false">添加商品信息
       </Alert>
       <!-- 步骤条区域 -->
@@ -29,7 +30,7 @@
 
       <!-- tab栏区域 -->
 
-      <Form :model="addForm" :rules="addRules" ref="addFormRef"  label-position="top">
+      <Form :model="addForm" :rules="addFormRules" ref="addFormRef" label-position="top">
         <Tabs v-model="activeIndex" @on-click="tabClicked">
           <TabPane label="基本信息" name="0">
             <FormItem label="商品名称" prop="goods_name">
@@ -50,7 +51,7 @@
             </FormItem>
           </TabPane>
           <TabPane label="商品参数" name="1">
-            <!-- 渲染表单的Item项 -->
+            <!-- 渲染表单的Item项-->
             <FormItem :label="item.attr_name" v-for="item in manyTableData" :key="item.attr_id">
               <!-- 复选框组 -->
               <CheckboxGroup v-model="item.attr_vals">
@@ -65,7 +66,7 @@
           </TabPane>
           <TabPane label="商品图片" name="3">
             <!-- action 表示图片要上传到的后台API地址 -->
-            <Upload :action="uploadURL" :on-preview="handlePhoto" :on-remove="handleRemove" list-type="picture" :headers="headerObj" :on-success="handleSuccess">
+            <Upload :action="uploadURL" :on-preview="handlePreview" :on-remove="handleRemove" list-type="picture" :headers="headerObj" :on-success="handleSuccess">
               <Button size="small" type="primary">点击上传</Button>
             </Upload>
           </TabPane>
@@ -77,11 +78,12 @@
           </TabPane>
         </Tabs>
       </Form>
+
     </Card>
 
     <!-- 图片预览 -->
-    <Modal title="图片预览" v-model="photoShow" width="50%">
-      <img :src="photoPath" alt="" class="previewImg">
+    <Modal title="图片预览" v-model="previewVisible" width="50%">
+      <img :src="previewPath" alt="" class="previewImg">
     </Modal>
   </div>
 </template>
@@ -107,7 +109,7 @@ export default {
         goods_introduce: '',
         attrs: []
       },
-      addRules: {
+      addFormRules: {
         goods_name: [
           { required: true, message: '请输入商品名称', trigger: 'blur' }
         ],
@@ -120,9 +122,9 @@ export default {
         goods_number: [
           { required: true, message: '请输入商品数量', trigger: 'blur' }
         ],
-        goods_cat: [
-          { required: true, message: '请选择商品分类', trigger: 'blur' }
-        ]
+        // goods_cat: [
+        //   { required: true, message: '请选择商品分类', trigger: 'blur' }
+        // ]
       },
       // 商品分类列表
       catelist: [],
@@ -141,8 +143,8 @@ export default {
       headerObj: {
         Authorization: window.sessionStorage.getItem('token')
       },
-      photoPath: '',
-      photoShow: false
+      previewPath: '',
+      previewVisible: false
     }
   },
   created() {
@@ -181,7 +183,6 @@ export default {
           return this.$message.error('获取动态参数列表失败！')
         }
 
-        // console.log(res.data)
         res.data.forEach(item => {
           item.attr_vals =
             item.attr_vals.length === 0 ? [] : item.attr_vals.split(' ')
@@ -199,14 +200,13 @@ export default {
           return this.$message.error('获取静态属性失败！')
         }
 
-        // console.log(res.data)
         this.onlyTableData = res.data
       }
     },
     // 处理图片预览效果
-    handlePhoto(file) {
-      this.photoPath = file.response.data.url
-      this.photoShow = true
+    handlePreview(file) {
+      this.previewPath = file.response.data.url
+      this.previewVisible = true
     },
     // 处理移除图片的操作
     handleRemove(file) {
@@ -252,6 +252,7 @@ export default {
         // 发起请求添加商品
         // 商品的名称，必须是唯一的
         const { data: res } = await this.$http.post('goods', form)
+
         if (res.meta.status !== 201) {
           return this.$message.error('添加商品失败！')
         }
@@ -273,11 +274,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.el-checkbox {
+  margin: 0 10px 0 0 !important;
+}
+
 .previewImg {
   width: 100%;
-}
-.ivu-steps{
-  margin:10px 0
 }
 
 .btnAdd {
