@@ -246,14 +246,14 @@ export default {
 
         // 发起请求添加商品
         // 商品的名称，必须是唯一的
-        const { data: res } = await this.$http.post('goods', form)
-
-        if (res.meta.status !== 201) {
-          return this.$message.error('添加商品失败！')
-        }
-
-        this.$message.success('添加商品成功！')
-        this.$router.push('/goods')
+        this.$http.post('goods', form).then(res=>{
+          if (res.data.meta.status == 201) {
+            this.$message.success('添加商品成功！')
+            this.$router.push('/goods')
+          }else{
+            this.$message.error('添加商品失败！')
+          }
+        })
       })
     }
   },

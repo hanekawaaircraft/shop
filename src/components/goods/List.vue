@@ -28,9 +28,9 @@
 
       <!-- table表格区域 -->
       <Table border :columns="columns" :data="goodslist">
-        <template slot-scope="scope" slot="add_time">
+        <!-- <template slot-scope="scope" slot="add_time">
             {{scope.row.add_time | dateFormat}}
-        </template>
+        </template> -->
         <template slot-scope="scope" slot="delGoods">
           <Button @click="removeById(scope.row.goods_id)" type="primary">删除</Button>
         </template>
@@ -78,14 +78,14 @@ export default {
         {
           title: '商品价格',
           key: 'goods_weight',
-          width:70
+          width:95
         },
-        {
-          title: '创建时间',
-          width:110,
-          slot: 'add_time',
-          key: 'add_time'
-        },
+        // {
+        //   title: '创建时间',
+        //   width:110,
+        //   slot: 'add_time',
+        //   key: 'add_time'
+        // },
         {
           title: '操作',
           width:130,
@@ -120,7 +120,7 @@ export default {
     getGoodsList() {
       this.$http.get('goods',{
         params:this.queryInfo
-      }).then(res=>{
+      }).then(res => {
         let body=res.data
         if(body.meta.status==200){
           this.goodslist = body.data.goods

@@ -92,7 +92,7 @@ export default {
   methods: {
     // 获取所有角色的列表
     getRolesList() {
-      this.$http.get('roles').then(res=>{
+      this.$http.get('roles').then(res => {
         let body=res.data
         if (body.meta.status == 200) {
           this.rolelist = res.data.data

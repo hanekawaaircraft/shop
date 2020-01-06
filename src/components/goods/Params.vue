@@ -9,7 +9,7 @@
         <Icon type="logo-buffer"></Icon> 商品管理
       </BreadcrumbItem>
       <BreadcrumbItem>
-        <Icon type="ios-cafe"></Icon> 分类参数
+        <Icon type="ios-cafe"></Icon> 分类标签
       </BreadcrumbItem>
     </Breadcrumb>
 
@@ -30,11 +30,11 @@
 
       <!-- tab 页签区域 -->
       <Tabs v-model="activeName" @on-click="handleTabClick">
-        <!-- 添加动态参数的面板 -->
-        <TabPane label="动态参数" name="many">
+        <!-- 添加动态标签的面板 -->
+        <TabPane label="动态标签" name="many">
           <!-- 添加参数的按钮 -->
           <Button type="primary" size="small" :disabled="isBtnHide" @click="addModalShow=true" class="buttonAdd">添加参数</Button>
-          <!-- 动态参数表格 -->
+          <!-- 动态标签表格 -->
           <Table border :columns="columns" :data="manyTableData">
             <template slot-scope="scope" slot="attribute">
               <!-- 循环渲染Tag标签 -->
@@ -52,11 +52,11 @@
             </template>
           </Table>  
         </TabPane>
-        <!-- 添加静态属性的面板 -->
-        <TabPane label="静态属性" name="only">
+        <!-- 添加静态标签的面板 -->
+        <TabPane label="静态标签" name="only">
           <!-- 添加属性的按钮 -->
           <Button type="primary" size="small" :disabled="isBtnHide" @click="addModalShow=true" class="buttonAdd">添加属性</Button>
-          <!-- 静态属性表格 -->
+          <!-- 静态标签表格 -->
           <Table border :columns="columns" :data="onlyTableData">
             <template slot-scope="scope" slot="attribute">
               <!-- 循环渲染Tag标签 -->
@@ -113,7 +113,7 @@
 export default {
   data() {
     return {
-      //iview渲染动态参数表格
+      //iview渲染动态标签表格
       columns: [
         {
           type:'index',
@@ -126,7 +126,7 @@ export default {
           width:200
         },
         {
-          title: '属性',
+          title: '标签',
           key: 'attribute',
           slot: 'attribute'
         },
@@ -149,9 +149,9 @@ export default {
       selectedCateKeys: [],
       // 被激活的页签的名称
       activeName: 'many',
-      // 动态参数的数据
+      // 动态标签的数据
       manyTableData: [],
-      // 静态属性的数据
+      // 静态标签的数据
       onlyTableData: [],
       // 控制添加对话框的显示与隐藏
       addModalShow: false,
@@ -394,9 +394,9 @@ export default {
     // 动态计算标题的文本
     titleText() {
       if (this.activeName === 'many') {
-        return '动态参数'
+        return '动态标签'
       }
-      return '静态属性'
+      return '静态标签'
     }
   }
 }

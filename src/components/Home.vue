@@ -87,7 +87,7 @@ export default {
             },
             {
               id: 115,
-              authName: "分类参数",
+              authName: "分类标签",
               path: "params",
               children: [],
             },
