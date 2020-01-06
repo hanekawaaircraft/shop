@@ -71,41 +71,25 @@ export default {
           key: 'goods_name'
         },
         {
-          title: '商品重量',
+          title: '商品价格',
           key: 'goods_price',
           width:95
         },
         {
-          title: '商品价格',
+          title: '商品重量',
           key: 'goods_weight',
           width:95
         },
-        // {
-        //   title: '创建时间',
-        //   width:110,
-        //   slot: 'add_time',
-        //   key: 'add_time'
-        // },
+        {
+          title: '商品数量',
+          key: 'goods_number',
+          width:95
+        },
         {
           title: '操作',
           width:130,
           slot: 'delGoods',
           align: 'center'
-          // render: (h, params) => {
-          //   return h('div', [
-          //     h('Button', {
-          //       props: {
-          //         type: 'primary',
-          //         size: 'small'
-          //       },
-          //       on: {
-          //         click: () => {
-          //           this.removeById(goodid)
-          //         }
-          //       }
-          //     }, '删除'),
-          //   ]);
-          // }
         }
       ],
       // 总数据条数

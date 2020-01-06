@@ -16,7 +16,7 @@
     <!-- 卡片视图区域 -->
     <Card>
       <!-- 警告区域 -->
-      <Alert show-icon type="warning" :closable="false">注意：只允许为第三级分类设置相关参数！</Alert>
+      <Alert show-icon type="warning" :closable="false">注意：只允许为三层结构项设置相关参数！</Alert>
 
       <!-- 选择商品分类区域 -->
       <Row class="cat_opt">
@@ -30,11 +30,11 @@
 
       <!-- tab 页签区域 -->
       <Tabs v-model="activeName" @on-click="handleTabClick">
-        <!-- 添加动态标签的面板 -->
-        <TabPane label="动态标签" name="many">
+        <!-- 添加商品参数的面板 -->
+        <TabPane label="商品参数" name="many">
           <!-- 添加参数的按钮 -->
           <Button type="primary" size="small" :disabled="isBtnHide" @click="addModalShow=true" class="buttonAdd">添加参数</Button>
-          <!-- 动态标签表格 -->
+          <!-- 商品参数表格 -->
           <Table border :columns="columns" :data="manyTableData">
             <template slot-scope="scope" slot="attribute">
               <!-- 循环渲染Tag标签 -->
@@ -52,11 +52,11 @@
             </template>
           </Table>  
         </TabPane>
-        <!-- 添加静态标签的面板 -->
-        <TabPane label="静态标签" name="only">
+        <!-- 添加商品属性的面板 -->
+        <TabPane label="商品属性" name="only">
           <!-- 添加属性的按钮 -->
           <Button type="primary" size="small" :disabled="isBtnHide" @click="addModalShow=true" class="buttonAdd">添加属性</Button>
-          <!-- 静态标签表格 -->
+          <!-- 商品属性表格 -->
           <Table border :columns="columns" :data="onlyTableData">
             <template slot-scope="scope" slot="attribute">
               <!-- 循环渲染Tag标签 -->
@@ -113,7 +113,7 @@
 export default {
   data() {
     return {
-      //iview渲染动态标签表格
+      //iview渲染商品参数表格
       columns: [
         {
           type:'index',
@@ -149,9 +149,9 @@ export default {
       selectedCateKeys: [],
       // 被激活的页签的名称
       activeName: 'many',
-      // 动态标签的数据
+      // 商品参数的数据
       manyTableData: [],
-      // 静态标签的数据
+      // 商品属性的数据
       onlyTableData: [],
       // 控制添加对话框的显示与隐藏
       addModalShow: false,
@@ -394,9 +394,9 @@ export default {
     // 动态计算标题的文本
     titleText() {
       if (this.activeName === 'many') {
-        return '动态标签'
+        return '商品参数'
       }
-      return '静态标签'
+      return '商品属性'
     }
   }
 }

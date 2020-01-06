@@ -257,7 +257,7 @@ export default {
           this.$message.error('获取用户列表失败！')
         }else{
           this.userlist = body.data.users
-          this.total = body.total
+          this.total = body.data.total
         }
       })
     },
@@ -311,7 +311,6 @@ export default {
     },
     // 展示编辑用户的对话框
     showEditModal(id) {
-      // console.log(id)
       this.$http.get('users/' + id).then(res=>{
         if (res.data.meta.status == 200) {
           this.editForm = res.data.data
@@ -360,9 +359,8 @@ export default {
         }
       ).catch(err => err)
 
-      // 如果用户确认删除，则返回值为字符串 confirm
-      // 如果用户取消了删除，则返回值为字符串 cancel
-      // console.log(MsgResult)
+      // 如果用户确认删除 则返回值为字符串 confirm
+      // 如果用户取消了删除 则返回值为字符串 cancel
       if (MsgResult !== 'confirm') {
         return this.$message.info('已取消删除')
       }
