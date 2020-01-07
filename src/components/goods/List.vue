@@ -28,9 +28,9 @@
 
       <!-- table表格区域 -->
       <Table border :columns="columns" :data="goodslist">
-        <!-- <template slot-scope="scope" slot="add_time">
+        <template slot-scope="scope" slot="add_time">
             {{scope.row.add_time | dateFormat}}
-        </template> -->
+        </template>
         <template slot-scope="scope" slot="delGoods">
           <Button @click="removeById(scope.row.goods_id)" type="primary">删除</Button>
         </template>
@@ -84,6 +84,12 @@ export default {
           title: '商品数量',
           key: 'goods_number',
           width:95
+        },
+        {
+          title: '添加时间',
+          key: 'add_time',
+          slot:'add_time',
+          width:120
         },
         {
           title: '操作',
