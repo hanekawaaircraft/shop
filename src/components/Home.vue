@@ -5,6 +5,16 @@
         <span>电商后台管理系统</span>
       </div>
       <div>
+        <!-- <Dropdown>
+          <a href="javascript:void(0)">
+              皮肤
+              <Icon type="ios-arrow-down"></Icon>
+          </a>
+          <DropdownMenu slot="list">
+              <DropdownItem :class="blue">1</DropdownItem>
+              <DropdownItem :class="">2</DropdownItem>
+          </DropdownMenu>
+        </Dropdown> -->
         欢迎{{username}},<Button @click="logout">退出登录</Button>
       </div>
     </Header>
@@ -199,4 +209,18 @@ export default {
     letter-spacing: 0.2em;
     cursor: pointer;
   }
+  // .blue{
+  //   .ivu-layout-header{
+  //     background-color: #fff;
+  //   }
+  //   .ivu-layout-sider{
+  //     background-color: #fff;
+  //   }
+  //   .ivu-menu-dark{ 
+  //     background: #fff;
+  //   }
+  //   .ivu-menu-dark.ivu-menu-vertical .ivu-menu-opened{
+  //     background: #fff;
+  //   }
+  // }
 </style>

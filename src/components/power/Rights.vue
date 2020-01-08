@@ -15,13 +15,14 @@
 
     <!-- 卡片视图 -->
     <Card>
-      <Table border :columns="columns" :data="rightsList" style="width: 100%;">
+      <Table border :columns="columns" :data="rightsList" style="width: 100%;" ref="table">
         <template slot-scope="scope" slot="level">
           <Tag v-if="scope.row.level==='0'">一级</Tag>
           <Tag color="green" v-else-if="scope.row.level==='1'">二级</Tag>
           <Tag color="volcano" v-else>三级</Tag>
         </template>
       </Table>
+      <Button type="primary" size="large" @click="exportData()"><Icon type="ios-download-outline"></Icon>导出成表格</Button>
     </Card>
   </div>
 </template>
@@ -69,7 +70,12 @@ export default {
           this.$message.error('获取权限列表失败!')
         }
       })
-    }
+    },
+    exportData (type) {
+      this.$refs.table.exportCsv({
+          filename: 'TableData'
+      });
+    }      
   }
 }
 </script>
@@ -77,5 +83,8 @@ export default {
 <style scoped>
 .ivu-table-overflowX {
   overflow-x: hidden !important;
+}
+button{
+  margin-top: 10px
 }
 </style>

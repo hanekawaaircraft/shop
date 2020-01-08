@@ -21,6 +21,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
 
+import VCharts from 'v-charts'
+
 // 配置请求的根路径
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
 
@@ -47,6 +49,8 @@ Vue.use(ElementUI);
 Vue.use(ViewUI);
 
 Vue.use(axios);
+
+Vue.use(VCharts)
 
 Vue.filter('dateFormat', function(originVal) {
   const dt = new Date(originVal)

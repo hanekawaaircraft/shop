@@ -1,99 +1,136 @@
 <template>
   <div>
-    <h1>首页</h1>
-    <p>{{username}},欢迎使用</p>
-    
-    <div class="pie">
-      <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-      <div id="main1" style="float:left;width:750px;height: 300px"></div>
-    </div>
-    <div style="margin-top:55px">
-      <i-circle  
-        :size="180"
-        :trail-width="4"
-        :stroke-width="5"
-        :percent="72"
-        stroke-linecap="square"
-        stroke-color="#5cb85c">
-        <div class="demo-Circle-custom">
-          <p>消费人群规模</p>
-          <h1>42,001,776</h1>
-          <span>
-            总占人数
-            <i>72%</i>
-            <p>纯属虚构</p>
-          </span>
-        </div>
-      </i-circle>
-    </div>
+    <h1>{{username}},欢迎使用</h1>
+      <Row :gutter="20">
+        <Col :span="12" class="echarts-item">
+          <div class="content-title">网站营收</div>
+          <ve-line :data="lineChartData" :settings="lineChartSettings" :mark-point="lineChartMarkPoint"  :colors="['#87a997', '#d49ea2']"></ve-line>
+        </Col>
+        <Col :span="12" class="echarts-item">
+          <div class="content-title">网站浏览量</div>
+          <ve-pie :data="pieChartData" :settings="pieChartSettings"></ve-pie>
+        </Col>
+      </Row>
+      <Row>
+        <Col :span="6">
+          <Card to="/rights">
+            <div style="text-align:center">
+              <Icon type="ios-albums" size="50" />
+              <h2>权限管理</h2>
+            </div>
+          </Card>
+        </Col>
+        <Col :span="6">
+          <Card to="/goods">
+            <div style="text-align:center">
+              <Icon type="md-cart" size="50"/>
+              <h2>商品管理</h2>
+            </div>
+          </Card>
+        </Col>
+        <Col :span="6">
+          <Card to="users">
+            <div style="text-align:center">
+              <Icon type="md-contact" size="50" />
+              <h2>用户管理</h2>
+            </div>
+          </Card>
+        </Col>
+        <Col :span="6">
+          <Card to="orders">
+            <div style="text-align:center">
+              <Icon type="ios-book" size="50"/>
+              <h2>订单管理</h2>
+            </div>
+          </Card>
+        </Col>
+      </Row> 
+      
   </div>
 </template>
 <script>
-import echarts from 'echarts'
+import Vue from 'vue'
+import VCharts from 'v-charts'
+Vue.use(VCharts)
 export default {
+  // components: { VeLine,VeRing},
   data(){
-    return{
-      username:""
+    return {
+      lineChartData: {
+        columns: ['日期', '营业额', '毛利', '占比', '其他'],
+        rows: [{
+          '营业额': 523, '日期': '1月1日', '毛利': 1623, '占比': 0.12, '其他': 100
+        }, {
+          '营业额': 1223, '日期': '1月2日', '毛利': 1323, '占比': 0.345, '其他': 100
+        }, {
+          '营业额': 2123, '日期': '1月3日', '毛利': 1423, '占比': 0.7, '其他': 100
+        }, {
+          '营业额': 4123, '日期': '1月4日', '毛利': 1823, '占比': 0.31, '其他': 100
+        }, {
+          '营业额': 3123, '日期': '1月5日', '毛利': 2523, '占比': 0.12, '其他': 100
+        }, {
+          '营业额': 7183, '日期': '1月6日', '毛利': 2723, '占比': 0.65, '其他': 100
+        },{
+          '营业额': 7123, '日期': '1月7日', '毛利': 1323, '占比': 0.65, '其他': 100
+        },{
+          '营业额': 6523, '日期': '1月8日', '毛利': 2223, '占比': 0.65, '其他': 100
+        },{
+          '营业额': 5623, '日期': '1月9日', '毛利': 1488, '占比': 0.65, '其他': 100
+        },{
+          '营业额': 4523, '日期': '1月10日', '毛利': 852, '占比': 0.65, '其他': 100
+        },{
+          '营业额': 6123, '日期': '1月11日', '毛利': 2323, '占比': 0.65, '其他': 100
+        }]
+      },
+      lineChartSettings: {
+        metrics: ['营业额', '毛利'],
+        dimension: ['日期']
+      },
+      lineChartMarkPoint: {
+        data: [{
+          name: '最大值',
+          type: 'max'
+        }]
+      },
+      pieChartData: {
+        columns: ['日期', '浏览量', '讨论量'],
+        rows: [{
+          '日期': '1月1号', '浏览量': 123, '讨论量': 3
+        }, {
+          '日期': '1月2号', '浏览量': 1223, '讨论量': 60
+        }, {
+          '日期': '1月3号', '浏览量': 1123, '讨论量': 90
+        }, {
+          '日期': '1月4号', '浏览量': 623, '讨论量': 12
+        }, {
+          '日期': '1月5号', '浏览量': 523, '讨论量': 15
+        }, {
+          '日期': '1月6号', '浏览量': 63, '讨论量': 21
+        }]
+      },
+      pieChartSettings: {
+        dimension: '日期',
+        metrics: '浏览量'
+      }
     }
   },
   created(){
     this.getUsername()
   },
   mounted(){
-    this.initData();
   },
   methods:{
     getUsername(){
       var that=this
       that.username=sessionStorage.getItem('user');
-    },
-    //初始化数据
-    initData() {
-      // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById('main1'));
-      // 绘制图表
-      myChart.setOption({
-        title : {
-          text: '这个网站用户访问来源',
-          subtext: '纯属虚构',
-          x:'center',//x轴方向对齐方式
-        },
-        tooltip : {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        legend: {
-          orient: 'vertical',
-          bottom: 'bottom',
-          data: ['亲朋访问','网页营销','微博广告','feed流']
-        },
-        series : [
-          {
-            name: '访问来源',
-            type: 'pie',
-            radius : '55%',
-            center: ['50%', '50%'],
-            data:[
-              {value:335, name:'亲朋访问'},
-              {value:310, name:'网页营销'},
-              {value:234, name:'微博广告'},
-              {value:135, name:'feed流'}
-            ],
-            itemStyle: {
-              emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }
-          }
-        ]
-      });
-    },
+    }
   }
 }
 </script>
 <style lang="less">
+.ivu-card{
+  margin:10px;
+}
 .demo-Circle-custom{
   & h1{
     color: #3f414d;
