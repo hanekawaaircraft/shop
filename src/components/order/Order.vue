@@ -12,8 +12,6 @@
         <Icon type="ios-cafe"></Icon> 订单列表
       </BreadcrumbItem>
     </Breadcrumb>
-
-
     <!-- 卡片视图区域 -->
     <Card>
       <!-- 订单列表数据 -->
@@ -78,7 +76,6 @@
 
 <script>
 import cityData from './citydata.js'
-
 export default {
   data() {
     return {

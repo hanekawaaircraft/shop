@@ -81,9 +81,6 @@ export default {
 </script>
 
 <style scoped>
-.ivu-table-overflowX {
-  overflow-x: hidden !important;
-}
 button{
   margin-top: 10px
 }

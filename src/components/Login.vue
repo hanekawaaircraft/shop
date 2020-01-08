@@ -19,7 +19,6 @@
         <FormItem class="btns"> 
           <!-- <Checkbox v-model="checked">记住密码</Checkbox> -->
           <Button type="primary" @click="login">登录</Button>
-          <!-- <Button @click="handleReset('loginFormRef')">重置</Button> -->
         </FormItem>
       </Form>
     </div>
@@ -79,11 +78,6 @@ export default {
         this.$router.push('/home')
       })
     },
-    // handleReset (loginFormRef) {
-    //   console.log('提交后清空')
-    //   console.log(this.loginFormRef)
-    //   this.$refs.formFilter.resetFields()
-    // }
   }
 }
 </script>
