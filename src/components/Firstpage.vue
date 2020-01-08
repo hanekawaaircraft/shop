@@ -1,6 +1,36 @@
 <template>
   <div>
     <h1>{{username}},欢迎使用</h1>
+      <Row>
+        <Col :span="6">
+          <Card>
+            <Icon type="md-document"  size="60" style="float:right" />
+            <span>昨日分享数:</span>
+            <h1>1,587</h1>
+          </Card> 
+        </Col>
+        <Col :span="6">
+          <Card> 
+            <Icon type="md-share-alt" size="60" style="float:right" />
+            <span>平均转化率为:</span>
+            <h1>25%</h1>
+          </Card>
+        </Col>
+        <Col :span="6">
+          <Card>
+            <Icon type="md-eye" size="60" style="float:right" />
+            <span>新注册用户:</span>    
+            <h1>120</h1>     
+          </Card>
+        </Col>
+        <Col :span="6">
+          <Card>
+            <Icon type="ios-notifications" size="60" style="float:right" />
+            <span> 新提醒</span>  
+            <h1>58</h1>  
+          </Card>
+        </Col>
+      </Row>
       <Row :gutter="20">
         <Col :span="12" class="echarts-item">
           <div class="content-title">网站营收</div>
@@ -129,7 +159,7 @@ export default {
 </script>
 <style lang="less">
 .ivu-card{
-  margin:10px;
+  margin:6px;
 }
 .demo-Circle-custom{
   & h1{
