@@ -5,39 +5,39 @@
       <Col :span="6">
         <Card>
           <Icon type="md-document"  size="60" style="float:right" />
-          <span>昨日分享数:</span>
+          <span>昨日分享数：</span>
           <h1>1,587</h1>
         </Card> 
       </Col>
       <Col :span="6">
         <Card> 
           <Icon type="md-share-alt" size="60" style="float:right" />
-          <span>平均转化率为:</span>
+          <span>平均转化率为：</span>
           <h1>25%</h1>
         </Card>
       </Col>
       <Col :span="6">
         <Card>
           <Icon type="md-eye" size="60" style="float:right" />
-          <span>新注册用户:</span>    
+          <span>新注册用户：</span>    
           <h1>120</h1>     
         </Card>
       </Col>
       <Col :span="6">
         <Card>
           <Icon type="ios-notifications" size="60" style="float:right" />
-          <span> 新提醒</span>  
+          <span>新提醒：</span>  
           <h1>58</h1>  
         </Card>
       </Col>
     </Row>
-    <Row :gutter="20" >
-      <Col :span="12" class="echarts-item" style="width:'700px'">
-        <div class="content-title">网站营收</div>
+    <Row :gutter="0" >
+      <Col :span="12">
+        <div style="text-align:center"><h3>网站营收</h3></div>
         <ve-line :data="lineChartData" :settings="lineChartSettings" :mark-point="lineChartMarkPoint"  :colors="['#87a997', '#d49ea2']"></ve-line>
       </Col>
-      <Col :span="12" class="echarts-item">
-        <div class="content-title">网站浏览量</div>
+      <Col :span="12" >
+      <div style="text-align:center"><h3>网站浏览量</h3></div>
         <ve-pie :data="pieChartData" :settings="pieChartSettings"></ve-pie>
       </Col>
     </Row>
@@ -192,7 +192,7 @@ export default {
     color: #3f414d;
   }
 }
-.ve-line{
+.ve-line,.ve-pie{
   max-width: 700px
 }
 </style>
