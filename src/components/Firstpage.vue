@@ -1,81 +1,80 @@
 <template>
   <div>
     <h1>{{username}},欢迎使用</h1>
-      <Row>
-        <Col :span="6">
-          <Card>
-            <Icon type="md-document"  size="60" style="float:right" />
-            <span>昨日分享数:</span>
-            <h1>1,587</h1>
-          </Card> 
-        </Col>
-        <Col :span="6">
-          <Card> 
-            <Icon type="md-share-alt" size="60" style="float:right" />
-            <span>平均转化率为:</span>
-            <h1>25%</h1>
-          </Card>
-        </Col>
-        <Col :span="6">
-          <Card>
-            <Icon type="md-eye" size="60" style="float:right" />
-            <span>新注册用户:</span>    
-            <h1>120</h1>     
-          </Card>
-        </Col>
-        <Col :span="6">
-          <Card>
-            <Icon type="ios-notifications" size="60" style="float:right" />
-            <span> 新提醒</span>  
-            <h1>58</h1>  
-          </Card>
-        </Col>
-      </Row>
-      <Row :gutter="20">
-        <Col :span="12" class="echarts-item">
-          <div class="content-title">网站营收</div>
-          <ve-line :data="lineChartData" :settings="lineChartSettings" :mark-point="lineChartMarkPoint"  :colors="['#87a997', '#d49ea2']"></ve-line>
-        </Col>
-        <Col :span="11" class="echarts-item">
-          <div class="content-title">网站浏览量</div>
-          <ve-pie :data="pieChartData" :settings="pieChartSettings"></ve-pie>
-        </Col>
-      </Row>
-      <Row>
-        <Col :span="6">
-          <Card to="/rights">
-            <div style="text-align:center">
-              <Icon type="ios-albums" size="50" />
-              <h2>权限管理</h2>
-            </div>
-          </Card>
-        </Col>
-        <Col :span="6">
-          <Card to="/goods">
-            <div style="text-align:center">
-              <Icon type="md-cart" size="50"/>
-              <h2>商品管理</h2>
-            </div>
-          </Card>
-        </Col>
-        <Col :span="6">
-          <Card to="users">
-            <div style="text-align:center">
-              <Icon type="md-contact" size="50" />
-              <h2>用户管理</h2>
-            </div>
-          </Card>
-        </Col>
-        <Col :span="6">
-          <Card to="orders">
-            <div style="text-align:center">
-              <Icon type="ios-book" size="50"/>
-              <h2>订单管理</h2>
-            </div>
-          </Card>
-        </Col>
-      </Row> 
-      
+    <Row>
+      <Col :span="6">
+        <Card>
+          <Icon type="md-document"  size="60" style="float:right" />
+          <span>昨日分享数:</span>
+          <h1>1,587</h1>
+        </Card> 
+      </Col>
+      <Col :span="6">
+        <Card> 
+          <Icon type="md-share-alt" size="60" style="float:right" />
+          <span>平均转化率为:</span>
+          <h1>25%</h1>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card>
+          <Icon type="md-eye" size="60" style="float:right" />
+          <span>新注册用户:</span>    
+          <h1>120</h1>     
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card>
+          <Icon type="ios-notifications" size="60" style="float:right" />
+          <span> 新提醒</span>  
+          <h1>58</h1>  
+        </Card>
+      </Col>
+    </Row>
+    <Row :gutter="20" >
+      <Col :span="12" class="echarts-item" style="width:'700px'">
+        <div class="content-title">网站营收</div>
+        <ve-line :data="lineChartData" :settings="lineChartSettings" :mark-point="lineChartMarkPoint"  :colors="['#87a997', '#d49ea2']"></ve-line>
+      </Col>
+      <Col :span="12" class="echarts-item">
+        <div class="content-title">网站浏览量</div>
+        <ve-pie :data="pieChartData" :settings="pieChartSettings"></ve-pie>
+      </Col>
+    </Row>
+    <Row>
+      <Col :span="6">
+        <Card to="/rights">
+          <div style="text-align:center">
+            <Icon type="ios-albums" size="50" />
+            <h2>权限管理</h2>
+          </div>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card to="/goods">
+          <div style="text-align:center">
+            <Icon type="md-cart" size="50"/>
+            <h2>商品管理</h2>
+          </div>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card to="users">
+          <div style="text-align:center">
+            <Icon type="md-contact" size="50" />
+            <h2>用户管理</h2>
+          </div>
+        </Card>
+      </Col>
+      <Col :span="6">
+        <Card to="orders">
+          <div style="text-align:center">
+            <Icon type="ios-book" size="50"/>
+            <h2>订单管理</h2>
+          </div>
+        </Card>
+      </Col>
+    </Row> 
   </div>
 </template>
 <script>
@@ -99,15 +98,15 @@ export default {
         }, {
           '营业额': 3123, '日期': '1月5日', '毛利': 1523,
         }, {
-          '营业额': 7183, '日期': '1月6日', '毛利': 2723, 
+          '营业额': 6183, '日期': '1月6日', '毛利': 2723, 
         },{
-          '营业额': 7123, '日期': '1月7日', '毛利': 2423, 
+          '营业额': 6123, '日期': '1月7日', '毛利': 2423, 
         },{
-          '营业额': 6523, '日期': '1月8日', '毛利': 2223, 
+          '营业额': 5523, '日期': '1月8日', '毛利': 2223, 
         },{
-          '营业额': 5623, '日期': '1月9日', '毛利': 1488, 
+          '营业额': 4623, '日期': '1月9日', '毛利': 1488, 
         },{
-          '营业额': 4523, '日期': '1月10日', '毛利': 852, 
+          '营业额': 4523, '日期': '1月10日', '毛利': 1052, 
         },{
           '营业额': 6123, '日期': '1月11日', '毛利': 2323,
         }]
@@ -192,5 +191,8 @@ export default {
     font-style: normal;
     color: #3f414d;
   }
+}
+.ve-line{
+  max-width: 700px
 }
 </style>
