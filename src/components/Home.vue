@@ -2,7 +2,7 @@
   <Layout class="home-container">
     <Header>
       <div>
-        <span>电商后台管理系统</span>
+        <span>电商后台管理网站</span>
       </div>
       <div>
         <!-- <Dropdown>
