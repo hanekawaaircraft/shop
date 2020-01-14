@@ -15,7 +15,7 @@
               <DropdownItem :class="">2</DropdownItem>
           </DropdownMenu>
         </Dropdown> -->
-        欢迎{{username}},<Button @click="logout">退出登录</Button>
+        欢迎{{username}} |&nbsp;<Button @click="logout"><Icon type="ios-close-circle" />退出登录</Button>
       </div>
     </Header>
 
@@ -24,7 +24,7 @@
         <Menu :theme="theme1" :active-name="activePath" accordion>
           <Submenu v-for="item in menulist" :key="item.id" :index="item.id + ''" :name="item.id">
             <template slot="title">             
-              <i :class="iconsObj[item.id]"></i>             
+              <i :class="iconsObj[item.id]"></i>
               <span>{{item.authName}}</span>
             </template>
             <MenuItem :index="'/' + subItem.path" v-for="subItem in item.children" :key="subItem.id" :name="subItem.id">
@@ -137,11 +137,11 @@ export default {
         }
       ],
       iconsObj: {
-        '125': 'iconfont icon-user',
-        '103': 'iconfont icon-tijikongjian',
-        '101': 'iconfont icon-shangpin',
-        '102': 'iconfont icon-danju',
-        '145': 'iconfont icon-baobiao'
+        '125': 'ivu-icon ivu-icon-ios-barcode',
+        '103': 'ivu-icon ivu-icon-ios-body',
+        '101': 'ivu-icon ivu-icon-ios-book',
+        '102': 'ivu-icon ivu-icon-md-bookmarks',
+        '145': 'ivu-icon ivu-icon-md-person'
       },
       // 被激活的链接地址
       activePath: ''
