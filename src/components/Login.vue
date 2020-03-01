@@ -226,7 +226,8 @@ export default {
 
 <style lang="less" scoped>
 .login_container {
-  background-image: -webkit-linear-gradient(left , #4c0785, #9b1976);
+  // background-image: -webkit-linear-gradient(left , #4c0785, #9b1976);
+  background-image:url("../assets/bg.png");
   height: 100%;
 }
 
