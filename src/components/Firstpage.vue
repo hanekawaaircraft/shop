@@ -1,4 +1,5 @@
 <template>
+ <!-- eslint-disable -->
   <div>
     <h1>{{username}},欢迎使用</h1>
     <Row>
@@ -78,6 +79,7 @@
   </div>
 </template>
 <script>
+/* eslint-disable*/ 
 import Vue from 'vue'
 import VCharts from 'v-charts'
 Vue.use(VCharts)

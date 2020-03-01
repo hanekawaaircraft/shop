@@ -1,4 +1,5 @@
 <template>
+ <!-- eslint-disable -->
   <div>
     <!-- 面包屑导航区域 -->
     <Breadcrumb>
@@ -90,6 +91,7 @@
 </template>
 
 <script>
+/*  eslint-disable */
 import _ from 'lodash'
 
 export default {

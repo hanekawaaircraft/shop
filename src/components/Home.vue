@@ -1,4 +1,5 @@
 <template>
+ <!-- eslint-disable -->
   <Layout class="home-container">
     <Header>
       <div>
@@ -45,6 +46,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
   data() {
     return {

@@ -1,4 +1,5 @@
 <template>
+ <!-- eslint-disable -->
   <div>
     <!-- 面包屑导航区域 -->
     <Breadcrumb>
@@ -114,6 +115,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
   data() {
     // 验证邮箱的正则表达式

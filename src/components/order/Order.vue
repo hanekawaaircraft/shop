@@ -1,4 +1,5 @@
 <template>
+ <!-- eslint-disable -->
   <div>
     <!-- 面包屑导航区域 -->
     <Breadcrumb>
@@ -75,6 +76,7 @@
 </template>
 
 <script>
+/* eslint-disable*/
 import cityData from './citydata.js'
 export default {
   data() {
