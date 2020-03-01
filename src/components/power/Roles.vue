@@ -37,7 +37,7 @@
       <el-tree :data="rightslist" :props="treeProps" show-checkbox node-key="id" default-expand-all :default-checked-keys="defKeys" ref="treeRef"></el-tree>
       <span slot="footer" class="dialog-footer">
         <Button @click="setRightShow = false">取 消</Button>
-        <Button color="primary" @click="allotRights">确 定</Button>
+        <Button type="primary" @click="allotRights">确 定</Button>
       </span>
     </Modal>
   </div>

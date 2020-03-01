@@ -73,7 +73,7 @@ export default {
     },
     exportData (type) {
       this.$refs.table.exportCsv({
-          filename: 'TableData'
+          filename: '权限列表'
       });
     }      
   }

@@ -37,7 +37,7 @@
         <ve-line :data="lineChartData" :settings="lineChartSettings" :mark-point="lineChartMarkPoint"  :colors="['#87a997', '#d49ea2']"></ve-line>
       </Col>
       <Col :span="12" >
-      <div style="text-align:center"><h3>网站浏览量</h3></div>
+        <div style="text-align:center"><h3>网站浏览量</h3></div>
         <ve-pie :data="pieChartData" :settings="pieChartSettings"></ve-pie>
       </Col>
     </Row>
@@ -88,7 +88,7 @@ export default {
       lineChartData: {
         columns: ['日期', '营业额', '毛利', '占比', '其他'],
         rows: [{
-          '营业额': 1123, '日期': '1月1日', '毛利': 900, 
+          '营业额': 1023, '日期': '1月1日', '毛利': 900, 
         }, {
           '营业额': 1323, '日期': '1月2日', '毛利': 1123,
         }, {
@@ -149,10 +149,10 @@ export default {
   mounted(){
   },
   methods:{
-    getUsername(){
-      var that=this
-      that.username=sessionStorage.getItem('user');
-    }
+    getUsername(){ 
+      var that=this 
+      that.username=sessionStorage.getItem('user'); 
+    } 
   }
 }
 </script>
