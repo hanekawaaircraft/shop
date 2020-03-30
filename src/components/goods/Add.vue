@@ -24,7 +24,7 @@
         <Step title="基本信息" content=""></Step>
         <Step title="商品参数" content=""></Step>
         <Step title="商品属性" content=""></Step>
-        <Step title="商品图片" content=""></Step>
+        <!--<Step title="商品图片" content=""></Step>-->
         <Step title="商品内容" content=""></Step>
         <Step title="完成" content=""></Step>
       </Steps>
@@ -66,12 +66,12 @@
               <Input v-model="item.attr_vals"></Input>
             </FormItem>
           </TabPane>
-          <TabPane label="商品图片" name="3">
-            <!-- action 表示图片要上传到的后台API地址 -->
+          <!--  <TabPane label="商品图片" name="3">
+            action 表示图片要上传到的后台API地址 
             <Upload :action="uploadURL" :on-preview="handleShow" :on-remove="handleRemove" list-type="picture" :headers="headerObj" :on-success="handleSuccess">
               <Button size="small" type="primary">点击上传</Button>
             </Upload>
-          </TabPane>
+          </TabPane>-->
           <TabPane label="商品内容" name="4">
             <!-- 富文本编辑器组件 -->
             <quill-editor v-model="addForm.goods_introduce"></quill-editor>
@@ -141,7 +141,7 @@ export default {
       // 静态属性列表数据
       onlyTableData: [],
       // 上传图片的URL地址
-      uploadURL: 'http://127.0.0.1:8888/api/private/v1/upload',
+      // uploadURL: 'http://127.0.0.1:8888/api/private/v1/upload',
       // 图片上传组件的headers请求头对象
       headerObj: {
         Authorization: window.sessionStorage.getItem('token')

@@ -32,6 +32,10 @@
         <template slot-scope="scope" slot="add_time">
             {{scope.row.add_time | dateFormat}}
         </template>
+        <template slot-scope="scope" slot="is_promote">
+          <Tag color="success" v-if="scope.row.is_promote === '1'">正在促销</Tag>
+          <Tag color="default" v-else>未促销</Tag>
+        </template>
         <template slot-scope="scope" slot="delGoods">
           <Button @click="removeById(scope.row.goods_id)" type="primary">删除</Button>
         </template>
@@ -91,6 +95,12 @@ export default {
           title: '添加时间',
           key: 'add_time',
           slot:'add_time',
+          width:120
+        },
+        {
+          title: '是否促销',
+          key: 'is_promote',
+          slot:'is_promote',
           width:120
         },
         {
